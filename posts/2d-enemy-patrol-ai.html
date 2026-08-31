@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>2D Enemy Patrol AI | 이성호</title>
+    <meta name="description" content="2D Enemy Patrol AI">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="../resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="../cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="../portfolio.html">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="../blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="#more">More</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <article class="post-article">
+        <a class="back-link" href="../blog.html">블로그로 돌아가기</a>
+        <p class="blog-meta">2D AppleStory · 4월 1일 · 2분 분량</p>
+        <h1>2D Enemy Patrol AI</h1>
+        <img class="post-image" src="https://static.wixstatic.com/media/fa00d9_7dd595d03e7c4999a3d6fa41adb60264~mv2.png/v1/fill/w_740,h_832,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/fa00d9_7dd595d03e7c4999a3d6fa41adb60264~mv2.png" alt="2D Enemy Patrol AI">
+        <div class="post-content">
+            <p>정의</p>
+            <p>2D 몬스터 패트롤 AI는 몬스터 구간을 자동으로 이동하며 순찰하도록 만드는 기본 인공지능 로직임.</p>
+            <p>유니티 2D 환경에서는 주로 이동 방향제어, 시간 기반 방향 전환, Rigidbody2D 이동 처리, 애니메이션 상태 전환을 조합하여 구현함.</p>
+            <p>패트롤 AI는 모슨터 행동 시스템의 가장 기본적인 형태로 플레이어를 추적하거나 공격하기 전 기본 행동 상태로 사용되는 경우가 많음. 간단한 규칙만으로 자연스러운 몬스터 움직임을 구현할 수 있는 특징 임.</p>
+            <p>핵심규칙</p>
+            <p>이동 방향을 명확하게 관리해야 함.</p>
+            <p>패트롤 AI에서는 몬스터가 좌우 이동 방향을 지속적으로 유지하다가 특정 조건에서 방향을 전환해야함.</p>
+            <p>시간 기반 패턴을 사용하면 자연스러운 움직임이 만들어짐.</p>
+            <p>패트롤 AI는 보통 시간을 기준으로 이동 패턴을 제어함.</p>
+            <p>이동 속도에 변화를 주면 AI 움직임이 자연스러워짐.</p>
+            <p>패트롤 AI에서 모든 몬스터가 항상 동일한 속도로 움직이면 인공지능이 인위적으로 보일 수 있음.</p>
+            <p>물리 기반 이동은 Rigidbody2D를 사용 하는 것이 안정적임</p>
+            <p>유니티 2D에서는 이동을 구현할 때 Transform, Rigidbody2D</p>
+            <p>패트롤 AI 처럼 충돌과 물리 상호 작용이 있는 오브젝트는 Rigidbody2D를 이용한 이동 방식이 더 안정적임.</p>
+            <p>구성 요소</p>
+            <p>Move Direction</p>
+            <p>몬스터가 이동할 방향을 나타내는 값으로, 일반적으로 좌우 이동을 위해 -1 또는 1 값을 사용.</p>
+            <p>Patrol Timer</p>
+            <p>몬스터가 현재 방향으로 이동하는 시간을 측정하는 타이머.</p>
+            <p>Move Speed</p>
+            <p>몬스터가 이동할 때 사용하는 기본 속도.</p>
+            <p>Speed Variance</p>
+            <p>기본 이동 속도에 랜덤 변화를 주기 위한 속도 변동 범위.</p>
+            <p>Rigidbody2D</p>
+            <p>유니티 2D 물리 시스템에서 이동과 충돌 계산을 담당하는 컴포넌트</p>
+            <p>Animation State</p>
+            <p>몬스터 행동 상태에 따라 변경되는 애니메이션 상태</p>
+            <p>유사함수</p>
+            <p>Random.Range</p>
+            <p>지정한 범위 내에서 랜덤 값을 생성하여 AI 패턴에 변화를 줄 때 사용.</p>
+            <p>Mathf.Abs</p>
+            <p>값의 절대값을 반환하여 이동 여부나 속도 크기를 판단할 때 사용.</p>
+            <p>Time.deltaTime</p>
+            <p>프레임 시간 기반으로 타이머를 계산하여 일정한 시간 흐름을 유지하는 데 사용.</p>
+            <p>Rigidbody2D.velocity</p>
+            <p>물리 기반으로 오브젝트 이동 속도를 직접 제어하는 속성.</p>
+            <p>주의사항</p>
+            <p>패트롤 시간 설정이 너무 짧으면 AI가 부자연스러워짐.</p>
+            <p>패트롤 시간이 지나치게 짧으면 몬스터가 지속적으로 방향을 바꾸면서 떨리는 움직임을 보일 수 있음.</p>
+            <p>속도 랜덤 범위가 너무 크면 움직임이 불안정해질 수 있음.</p>
+            <p>속도 변화 범위가 과도하게 크면 몬스터 이동 패턴이 불규칙해 보일 수 있으므로 적절한 범위 설정이 필요함.</p>
+            <p>애니메이션 상태와 이동 상태가 어긋날 수 있음</p>
+            <p>이동 여부와 애니메이션 상태를 분리해서 관리하지 않으면</p>
+            <p>이동 중인데 Idle 애니메이션이 재생되거나</p>
+            <p>정지 상태인데 Run 애니메이션이 재생되는</p>
+            <p>문제가 발생할 수 있습니다.</p>
+            <p>2D AppleStory</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>

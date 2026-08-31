@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Anim_Blend | 이성호</title>
+    <meta name="description" content="Anim_Blend">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="../resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="../cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="../portfolio.html">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="../blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="#more">More</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <article class="post-article">
+        <a class="back-link" href="../blog.html">블로그로 돌아가기</a>
+        <p class="blog-meta">3D RPG · 2월 18일 · 1분 분량</p>
+        <h1>Anim_Blend</h1>
+        <img class="post-image" src="https://static.wixstatic.com/media/fa00d9_4b85ae49f9ff412396a4b226e495f63d~mv2.png/v1/fill/w_740,h_316,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/fa00d9_4b85ae49f9ff412396a4b226e495f63d~mv2.png" alt="Anim_Blend">
+        <div class="post-content">
+            <p>최종 수정일: 2월 20일</p>
+            <p>정의</p>
+            <p>AnimBlend(Animator Blend Tree 기반 애니메이션 블렌딩)은 캐릭터의 이동 정도를 연속 값으로 표현하고, 그 값에 따라 여러 애니메이션 클립(Idle/Run 등)을 자연스럽게 섞어 재생하는 Unity 애니 메이션 구성 방식. 핵심은 &quot;상태를 딱 잘라 바꾸는 것&quot;이 아니라, 값이 변하는 만큼 애니메이션도 부드럽게 변하게 만드는 것.</p>
+            <p>핵심 규칙</p>
+            <p>Blend Tree는 Float 파라미터 1개를 중심으로 설계함.</p>
+            <p>블렌드 값은 ‘즉시 점프’가 아니라 ‘보간’으로 움직임.</p>
+            <p>갑자기 0→1로 튀면 블렌드의 장점이 사라짐.</p>
+            <p>Lerp/SmoothDamp처럼 완만한 변화가 기본임.</p>
+            <p>블랜드 값은 &#x27;즉시 점프&#x27;가 아니라 보간으로 움직임.</p>
+            <p>Animator 제어는 파라미터 Set이 중심이고, 상태 강제 재생은 최소화함.</p>
+            <p>이동 블렌드는 이동계열만 담당함.</p>
+            <p>구성 요소</p>
+            <p>Animator: 애니메이션 상태머신과 파라미터를 통해 캐릭터 애니메이션을 제어하는 컴포넌트</p>
+            <p>Animator Controller: State,Transition, Parameter, Blend Tree등을 포함한 애니메이션 제어 에셋</p>
+            <p>Blend Tree: 하나의 파라미터 값을 기준으로 여러 애니메이션 클립을 섞어 재생하는 노드</p>
+            <p>Float Parameter: Blend Tree 입렵값으로 사용되는 연속 값 파라미터</p>
+            <p>Threshold: 특정 파라미터 값에서 어떤 클립이 얼마나 반영되는지 결정하는 기준점</p>
+            <p>Damping: 파라미터 값이 근변하지 않도록 부드럽게 따라가게 만드는 처리</p>
+            <p>Base Layer: 기본 전신 애니메이션이 재생되는 레이어</p>
+            <p>유사함수</p>
+            <p>Animator.SetFlaot: Blend Tree 입력 파라미터를 갱신해 블렌딩 결과를 바꿈.</p>
+            <p>Mathf.SmoothDamp: 튀지 않게 더 자연스러운 감쇠로 값을 추종시킴.</p>
+            <p>Time.deletaTime: 프레임 의존을 줄이고 보간 속도를 일정하게 유지하는데 사용함.</p>
+            <p>Animator.StringToHash: 파라미터/상태 이름을 해시로 변환해 문자열 비용을 줄일때 사용함.</p>
+            <p>주의사항</p>
+            <p>Update에서 매프레임 Play로 같은 상태를 강제하면 Blend Tree 장점이 망가짐.</p>
+            <p>GetComponent를 매 프레임 호출하면 불필요한 비용이 생김.</p>
+            <p>Threshold와 실제 애니메이션 속도/루트모션이 어긋나면 미끄러짐이 보일 수 있음.</p>
+            <p>0/1만 쓰는 Blend Tree는 부드러운 전환은 얻지만 확장성은 낭비가 될 수 있음.</p>
+            <p>블렌드 값 보간 속도가 너무 크면 &#x27;딱딱한 전환&#x27;,너무작으면 &#x27;반응이 느림&#x27;이 됨.</p>
+            <p>이동 블렌드와 다른동작이 같은 레이어에서 경쟁하면 덮어쓰기 문제가 생김.</p>
+            <p>3D RPG</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>

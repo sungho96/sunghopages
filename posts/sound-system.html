@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sound System | 이성호</title>
+    <meta name="description" content="Sound System">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="../resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="../cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="../portfolio.html">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="../blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="#more">More</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <article class="post-article">
+        <a class="back-link" href="../blog.html">블로그로 돌아가기</a>
+        <p class="blog-meta">3D RPG · 2월 12일 · 2분 분량</p>
+        <h1>Sound System</h1>
+        <img class="post-image" src="https://static.wixstatic.com/media/fa00d9_3b5de65b7cd04a16be9d0e3326f82290~mv2.png/v1/fill/w_740,h_737,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/fa00d9_3b5de65b7cd04a16be9d0e3326f82290~mv2.png" alt="Sound System">
+        <div class="post-content">
+            <p>최종 수정일: 2월 20일</p>
+            <p>정의</p>
+            <p>Sound System은 BGM과 SFX를 단순히 &quot;재생&quot; 하는 기능이 아니라 오디오 리소스를 안정적으로 확보(로드)하고 재사용(캐싱)하며, 씬 전환과 정책(채널/중복/볼륨)을 일관되게 적용하는 운영 체계임. 이때 시스템의 핵심은 재생 호출 보다 AudioClip을 어떤 규칙으로 가져오고 관리하는지에 있음.</p>
+            <p>핵심 규칙</p>
+            <p>리소스 확보 정책이 우선: 재생 로직보다 먼저 &quot;클립을 어떻게 얻는지&quot; 규칙을 고정 해야 함.</p>
+            <p>캐싱 기준을 명확히 분리: 반복 호출이 많은 SFX는 캐싱 우선, BGM은 교체 중심이라 즉시 로드/교체처럼 단순 정책이 유리할 수 있음.</p>
+            <p>경로 정규화(표준화): 같은 크립을 여러 문자열로 참조하지 않도록 접두어/규칙을 한 곳에서 정규화함.</p>
+            <p>채널 역할 분리 : BGM같은 &quot;단일 트랙/유지/교체&quot;, SFX는 &quot;동시 재생 허용&quot;처럼 목적별 채널 정책을 분리함.</p>
+            <p>중복 재생 제어 정책:SFX 연타/동시 재생은 허용하되 과일을 막는 규칙(상한, 우선순위, 무시)을 준비함.</p>
+            <p>LifeTime 관리: 전역 루트/채널은 중복 생성되지 않게 유치하고, 초기화(Clear)시점과 범위를 정책으로 고정함.</p>
+            <p>구성 요소(용어 정리)</p>
+            <p>Audio Listener: 씬의 모든 오디오를 듣는 역할을 하는 마이크 같은 수신기 컴포넌트</p>
+            <p>Audio Mixer: 오디오 신호 그룹/체인으로 라우팅하고 이펙트,볼륨 등을 후처리하는 에셋</p>
+            <p>Audio Mixer Group: 믹서 안에서 오디를 특징/채널/카테고리로 라우팅하고 그룹 단위로 처리하기 위한 그룹</p>
+            <p>Audio Group : Audio Mixer: 내부에서 사운드 카테고리/믹싱 구조를 구성하는 그룹 단위</p>
+            <p>Audio Snapshot: 믹서 파라미터 상태를 &quot;스냅샷&quot;으로 지정하고, 상태 간 전환에 사용하는 객체</p>
+            <p>함수</p>
+            <p>Resources.Load&lt;AudioClip&gt;: 경로 기반 클립 로드의 대표 방식(캐싱 정책과 결합됨)</p>
+            <p>AudioSource.Play: 단일 트랙(BGM) 교체,재생 흐름에서 기본이 되는 재생 호출</p>
+            <p>AudioSource.Stop/Pause : 씬 전환상태 변경시 재생 상태를 제어하는 기본 동작</p>
+            <p>AudioMixer.SetFloat: 마스터/카테고리 볼륨을 코드 밖 설정과 연결하는 대표 API</p>
+            <p>주의사항</p>
+            <p>캐시 키 불일치 : 경로 표준화가 약하면 같은 클립이 서로 다른 키로 중복 로드되어 메모리와 디버깅 비용이 늘어남.</p>
+            <p>로드 실패의 침묵: 누락 크립을 조용히 무시하면 &quot;가끔 소리가 안 나는&quot;형태로 늦게 터짐.</p>
+            <p>캐시 무제한 누적: SFX 캐싱은 편하지만 해제/상한 정책이 없으면 세션이 길어질수로메모리 점유가 증가 할 수 있음.</p>
+            <p>BGM과 SFX 캐싱 정책 혼합: BGM까지 무조건 캐싱하면 트랙 교체/메모리 측면에서 오히려 관리가 어려워질 수 있음.</p>
+            <p>Clear의 범위 혼동: &quot;재생만 중단&quot;과 캐시까지 초기화&quot;는 영향이 다르므로, 호출 시점과 의도를 명확히 해야함.</p>
+            <p>3D RPG</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>

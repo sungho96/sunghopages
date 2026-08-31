@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SFX | 이성호</title>
+    <meta name="description" content="SFX">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="../resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="../cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="../portfolio.html">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="../blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="#more">More</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <article class="post-article">
+        <a class="back-link" href="../blog.html">블로그로 돌아가기</a>
+        <p class="blog-meta">TowerRandomDefence · 1월 28일 · 1분 분량</p>
+        <h1>SFX</h1>
+        <img class="post-image" src="https://static.wixstatic.com/media/fa00d9_0b091fbfe52940749f56584472b738f1~mv2.png/v1/fill/w_600,h_718,al_c,q_90,enc_avif,quality_auto/fa00d9_0b091fbfe52940749f56584472b738f1~mv2.png" alt="SFX">
+        <div class="post-content">
+            <p>최종 수정일: 1월 31일</p>
+            <p>정의</p>
+            <p>SFX(Sound Effects)는 특정 이벤트(공격,피격,버튼 클릭,UI 전환 등) 발생했을 때 짧은 효과음을 재생하여, 사용자가 상황변화를 즉시 인지 하도록 돕는 오디오 요소입니다.</p>
+            <p>핵심 규칙</p>
+            <p>재생 주체가 명확해야 함</p>
+            <p>어떤 오브젝트의 AudioSource로 재생할지(타워/적/전역 관리자)를 정의 해야합니다.</p>
+            <p>중복 재생 정책이 있어야 함</p>
+            <p>같은 이벤트가 연속적으로 발생할때 겹처서 재생 할지,  무시 할지, 덮어쓰기 할지 규칙이 필요합니다.</p>
+            <p>볼륨/믹싱 정책이 있어야 함</p>
+            <p>SFX는 BGM과 섞이므로 볼륨 기준을 문서로 고정해야 합니다.</p>
+            <p>구성 요소(용어 정리)</p>
+            <p>AudioClip: 재생할 사운드 파일</p>
+            <p>AudioSource : 실제로 소리를 재생하는 컴포넌트 (씬 오브젝트에 존재)</p>
+            <p>Play/PlayOneShot :재생방식</p>
+            <p>Play() : 현재 AudioSource.clip을 재생</p>
+            <p>PayOneshot : AudioSource의 기본 Clip과 무관하게 효과음을 추가 재생(중첩 가능)</p>
+            <p>Volume : 음량(0~1)</p>
+            <p>Spatial Blend(2D/3D) : 2D(고정) /3D(거리 감쇠)</p>
+            <p>Data Flow</p>
+            <p>이벤트 발생 → 재생 조건 검사 → AudioSource 선택 → play() 호출 → 종료</p>
+            <p>주의사항</p>
+            <p>AudioSource가 Null이면 코드가 맞아도 소리가 안 납니다</p>
+            <p>PlayOneShot은 겹침이 가능해서, 반복 호출되면 소리가 과하게 겹칠 수 있습니다.</p>
+            <p>3D 사운드인데 Spatial Blend가 0(2D)이면 거리감이 없습니다.</p>
+            <p>TowerRandomDefence</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>

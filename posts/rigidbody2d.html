@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rigidbody2D | 이성호</title>
+    <meta name="description" content="Rigidbody2D">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="../resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="../cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="../portfolio.html">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="../blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="#more">More</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <article class="post-article">
+        <a class="back-link" href="../blog.html">블로그로 돌아가기</a>
+        <p class="blog-meta">2D AppleStory · 3월 12일 · 2분 분량</p>
+        <h1>Rigidbody2D</h1>
+        <img class="post-image" src="https://static.wixstatic.com/media/fa00d9_834523f2099c4dd0831cf4014d1cc5eb~mv2.png/v1/fill/w_740,h_717,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/fa00d9_834523f2099c4dd0831cf4014d1cc5eb~mv2.png" alt="Rigidbody2D">
+        <div class="post-content">
+            <p>정의</p>
+            <p>Rigidbody2D 활용은 2D 오브젝트에 물리 특성(질량, 중력, 힘/속도)을 부여하고, 물리 엔진이 계산하는 이동과 충돌 반응을 기반으로 캐릭터/오브젝트 동작을 구현하는 방식임. Transform을 직접 이동시키는 방식보다 물리 상호작용이 자연스럽고, 충돌/마찰/중력같은 요소를 일관되게 다룰 수 있음.</p>
+            <p>핵심규칙</p>
+            <p>물리 이동은 FixedUpdate에서 처리하는 것이 기본 입력은 Update에서 받고 실젝 속도/힘 적용은 FixedUpdate에서 수행하는 흐름이 안정적</p>
+            <p>Transform 직접 변경과 Rigidbody2D 기반 이동을 섞지 않는 것이 중요함. 순간 이동/보정이 필요하면 위치 대입을 제한적으로 사용하고, 기본 이동은 velocity힘 중심으로 유지 함.</p>
+            <p>중력/속도는 &quot;상태&quot;로 관리하는 편이 안전 함.</p>
+            <p>예) 사다리 상태에서는 gravityScale을 0으로 두고, 탈출 시 원래 값으로 복구하는 식.</p>
+            <p>Rigidbody2D 설정(Body Type, Constraints, Collision Detection)이 로직만큼 중요 함</p>
+            <p>설정이 맞지 않으면 코드가 정상이어도 튕김/떨림/관통이 발생 할 수 있음.</p>
+            <p>충돌 판정은 목적에 따라 나눔</p>
+            <p>지면확인은 Raycast, 접촉반응은 Collision, 영역 감지는 Trigger처럼 역할을 분리하면 유지보수가 쉬워짐.</p>
+            <p>구성요소</p>
+            <p>Rigidbody2D: 2D 물리 시뮬레이션의 주체(중력, 속도, 질량 등 포함).</p>
+            <p>velocity: 현재 속도 벡터(직접 세팅하면 즉각적인 물리 이동이 됨).</p>
+            <p>gravityScale: Rigidbody2D에 적용되는 중력 배율(0이면 중력 영향 없음)</p>
+            <p>FixedUpdate: 물리 업데이트 루프(고정 시강 간격, 물리 연산에 적합).</p>
+            <p>Collider2D: 충돌 형태.</p>
+            <p>Physics2D.Raycast: 특정 방향으로 광선을 쏴서 충돌 여부/거리/콜라이더를 얻는 2D 물리 질의.</p>
+            <p>LayerMask: 물리 질의/충돌 필터링을 위한 레이어 집합.</p>
+            <p>유사함수</p>
+            <p>Rigidbody2D.Addforce: 힘을 가해 가속 기반 이동을 만들 때 사용함.</p>
+            <p>Rigidbody2D.MovePosition: 물리와 호환되게 목표 위치로 이동시키는 방식(주로 Kinematic사용)</p>
+            <p>Physics2D.OverlapCircle: 특정 반경  영역 안의 콜라이더 존재 여부를 빠르게 확인함.</p>
+            <p>Physics2D.BoxCast: 박스 형태로 쏴서 접촉 여부를 검사함.(발판/벽 체크에 유리)</p>
+            <p>주의 사항</p>
+            <p>Update에서 velocity를 계속 만지면 프레임레이트에 따라 미세한 흔들림/불안정이 생길 수 있어, 이동 적용은 FixedUpdate 중심이 안전함.</p>
+            <p>사다리 처럼 중력을 끄는 상태에서는 중력 복구 누락이 자주 발생합니다. 상태 종료 지점 마다 gravityScale 복구가 일관되게 들어가야 함.</p>
+            <p>콜라이더가 겹치거나 관통되는 문제는 코드보다 Rigidbody2D의 Collision Detection과 Fixed Timestep, Collider 형태/크기에서 더자주 발생 함.</p>
+            <p>Trigger와 Collision 목적을 섞으면 감지인데 반응이 일어나거나/ 반응인데 감지가 안되는 혼란이 생김. 영역 감지는 Trigger, 물리 반응은 Collision으로 분리하는 편이 좋음</p>
+            <p>지면 체크를 Raycast로 할 때는 체크 시작점과 거리, 마스크가 조금만 어긋나도 점프가 안되거나/ 공중에서 점프가 되는 문제가 생김.</p>
+            <p>2D AppleStory</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>

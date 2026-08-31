@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Finite State Machine(유한 상태 기계) | 이성호</title>
+    <meta name="description" content="Finite State Machine(유한 상태 기계)">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="../resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="../cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="../portfolio.html">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="../blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="#more">More</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <article class="post-article">
+        <a class="back-link" href="../blog.html">블로그로 돌아가기</a>
+        <p class="blog-meta">TowerRandomDefence · 1월 28일 · 1분 분량</p>
+        <h1>Finite State Machine(유한 상태 기계)</h1>
+        <img class="post-image" src="https://static.wixstatic.com/media/fa00d9_5655ce881e4d4a89b73e736af901caf6~mv2.png/v1/fill/w_740,h_235,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/fa00d9_5655ce881e4d4a89b73e736af901caf6~mv2.png" alt="Finite State Machine(유한 상태 기계)">
+        <div class="post-content">
+            <p>최종 수정일: 2월 24일</p>
+            <p>정의</p>
+            <p>FSM는 시스템이 가질 수 있는 상태가 유한 개로 정혀져있고, 어떤 시점에도 시스템은 그중 정확히 하나의 상태에 있으며, 입력/조건에 의해 정해진 규칙대로 상태가 전이(Transition)되는 모델입니다.</p>
+            <p>핵심 규칙</p>
+            <p>state는 유한 개</p>
+            <p>상태목록이 명확히 정의되어야합니다.</p>
+            <p>현재 상태는 1개</p>
+            <p>동시에 Idle이면서 Attack 같은 모호함을 허용하지 않는 것이 기본 모델입니다.</p>
+            <p>전이는 규칙으로만 발생</p>
+            <p>상태변경은 조건/입력에 의해 일어나면,임의로 섞이지 않도록 제한합니다.</p>
+            <p>구성 요소(용어 정리)</p>
+            <p>state(상태): 시스템의 동작모드</p>
+            <p>Evnet/Input(입력): 외부에서 들어오는 트리거(버튼, 충돌, 시간 만료 등)</p>
+            <p>Condtion/Guard(가드 조건) : 전이가 허용되는 조건식</p>
+            <p>Transition(전이): (현재 상태, 입력/조건) -&gt; 다음 상태 규칙</p>
+            <p>Action(동작): 상태에 속한 실행 로직</p>
+            <p>실무에서 State마다 &quot;들어갈 때(Enter)/머무는동안(Update)/나갈때(Exit)로 동작을 분리해서 문서화하는 경우가 많습니다.</p>
+            <p>표현 방식</p>
+            <p>상태전이 표</p>
+            <p>행: 현재 상태</p>
+            <p>열: 입력 조건</p>
+            <p>값 : 다음상태</p>
+            <p>상태 전이 다이어그램</p>
+            <p>노드: 상태</p>
+            <p>화살표: 전이(조건/입력 라벨 포함)</p>
+            <p>상태 명세서</p>
+            <p>Enrty 조건 : 어떤 전이로 들어가는가</p>
+            <p>Exit 조건 : 어떤 전이로 나가는가</p>
+            <p>In-state Action: 상태 유지 중 수행되는 행동</p>
+            <p>Forbidden: 이 상태에서 하면 안 되는 행동(금지 규척)</p>
+            <p>FSM 사용 목적</p>
+            <p>행동 상호 배타성 보장</p>
+            <p>공경 중에는 이동 로직이 돌면 안된다.</p>
+            <p>죽은 상태에서는 입력이 먹으면 안된다.</p>
+            <p>상태전환 조건을 한곳에 모으기</p>
+            <p>if문이 여러 스크립트에 흩어지면 디버깅이 어려움</p>
+            <p>주의 사항</p>
+            <p>FSM if문 제거가 목적이 아닙니다.</p>
+            <p>if문을 &#x27;전이 규칙&#x27;으로 격리 하는 것이 목적입니다.</p>
+            <p>상태가 너무 많아지면 FSM도 복잡해집니다.</p>
+            <p>이 경우 상위/하위 상태(계층형 FSM)나 서브 FSM로 분리합니다.</p>
+            <p>TowerRandomDefence</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>

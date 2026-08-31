@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Unity Event &amp; C# Event &amp; Action | 이성호</title>
+    <meta name="description" content="Unity Event &amp; C# Event &amp; Action">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="../resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="../cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="../portfolio.html">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="../blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="#more">More</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <article class="post-article">
+        <a class="back-link" href="../blog.html">블로그로 돌아가기</a>
+        <p class="blog-meta">TowerRandomDefence · 1월 25일 · 1분 분량</p>
+        <h1>Unity Event &amp; C# Event &amp; Action</h1>
+        <img class="post-image" src="https://static.wixstatic.com/media/fa00d9_5e0fe8752d824d90833a70235e1293df~mv2.png/v1/fill/w_660,h_928,al_c,q_90,enc_avif,quality_auto/fa00d9_5e0fe8752d824d90833a70235e1293df~mv2.png" alt="Unity Event &amp; C# Event &amp; Action">
+        <div class="post-content">
+            <p>최종 수정일: 1월 26일</p>
+            <p>Unity Event</p>
+            <p>Unity에서 제공하는 이벤트 시스템으로 Inspector에서 시각적으로 이벤트를 연결하고 관리할 수 있게 해주는 기능입니다.</p>
+            <p>Unity Data Event Data Flow</p>
+            <p>유니티이벤트 정의 -&gt; 인스펙터에서 연결 -&gt; AddListenter 연결 -&gt;Invoke 호출</p>
+            <p>특징</p>
+            <p>Unity Inspector에서 직접 연결 가능 합니다.</p>
+            <p>직렬화 지원 합니다. (Scene에 저장 가능)</p>
+            <p>런타임 중에도 동적으로 리스너 추가/제거 가능 합니다.</p>
+            <p>주로 사용 하는 곳</p>
+            <p>UI 버튼 클릭 이벤트</p>
+            <p>씬 전환 이벤트</p>
+            <p>애니메이션 이벤트 트리거</p>
+            <p>Inspector에서 설정이 필요한 게임 이벤트</p>
+            <p>C# Event</p>
+            <p>특정 상황이 발생했음 을 다른 클래스에게 알리는 메커니즘 입니다.</p>
+            <p>특징</p>
+            <p>캡슐화가 잘 됩니다.</p>
+            <p>성능이 가장 좋습니다.</p>
+            <p>코드 기반으로만 구독 가능 합니다.</p>
+            <p>속도가 유니티 이벤트보다 빠릅니다.</p>
+            <p>주로 사용 하는 곳</p>
+            <p>게임 상태 변경 통지 합니다.</p>
+            <p>캐릭터 상태 변경 알립니다.</p>
+            <p>시스템 간 통신 합니다.</p>
+            <p>데이터 모델 변경 알립니다.</p>
+            <p>C# Event Data Flow</p>
+            <p>이벤트 정의 -&gt; 구독자 등록 -&gt; 이벤트 발생 -&gt; 구독자들의 메서드 실행</p>
+            <p>Action</p>
+            <p>델리게이트의 한 종류로 변환값 없는 메서드를 참조 할 수 있는 타입 입니다.</p>
+            <p>Action Data Flow</p>
+            <p>Action 실행 -&gt; 람다식으로 연결 -&gt; 직접 메서드 연결 -&gt; Invoke로 호출</p>
+            <p>특징</p>
+            <p>가장 간단한 구현 입니다.</p>
+            <p>람다식 사용 가능 합니다.</p>
+            <p>일회성 이벤트에 적합 합니다.</p>
+            <p>구독자 관리가 다소 어려움이 있습니다.</p>
+            <p>주로 사용하는 곳</p>
+            <p>비동기 작업 완료 콜백</p>
+            <p>임시 이벤트 처리</p>
+            <p>간단한 함수 콜백</p>
+            <p>람다식을 활용한 동적 이벤트 처리</p>
+            <p>Action vs Event Action 차이</p>
+            <p>Action : 누구나 직접 호출, 할당, null등 설정가능 합니다. (캡슐화 X)</p>
+            <p>Event Action : 선언된 클래스 내부에서만 호출가능, 외부에서는 구독/해제만 가능 합니다. (캡슐화 O)</p>
+            <p>TowerRandomDefence</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>

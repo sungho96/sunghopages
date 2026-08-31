@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>(3D)Raycast | 이성호</title>
+    <meta name="description" content="(3D)Raycast">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="../resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="../cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="../portfolio.html">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="../blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="#more">More</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <article class="post-article">
+        <a class="back-link" href="../blog.html">블로그로 돌아가기</a>
+        <p class="blog-meta">3D RPG · 1월 30일 · 1분 분량</p>
+        <h1>(3D)Raycast</h1>
+        <img class="post-image" src="https://static.wixstatic.com/media/fa00d9_f78298c68cca4d2aa9e029b64e436ba4~mv2.png/v1/fill/w_740,h_734,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/fa00d9_f78298c68cca4d2aa9e029b64e436ba4~mv2.png" alt="(3D)Raycast">
+        <div class="post-content">
+            <p>최종 수정일: 2월 20일</p>
+            <p>정의</p>
+            <p>Raycast는 한 지점(origin)에서 특정 방향(direction)으로 가상의 광선(ray)을 발사하여, 씬의 Collider와 충돌하는지 검사하고 충돌정보를 얻는 물리(physics) 기능임. 충돌이 발생하면 무엇이 맞았는지, 어디를 맞았는지, 얼마나 떨어져있는지 같은 정보를 RaycastHit로 확인 할 수있음.</p>
+            <p>핵심 규칙</p>
+            <p>Ray의 시작점과 방향이 명확해야 함</p>
+            <p>Raycast는 &quot;어디서(orgin) 어떤방향(direction)으로 쏘는지&quot;가 전부입니다. 시작점이 잘못되면 엉뚱한 오브젝트를 맞추고, 방향이 잘못되면 아예감직가 되지 않음.</p>
+            <p>최대거리(MaxDistance)정책이 있어야함</p>
+            <p>무한히 검사하지 않고 &quot;필요한 거리까지만&quot; 검사해야 성능과 의도가 안정됩니다. 상호작용, 지면체크, 카메라 가림 등 목적에맞는 거리 기준을 정해두는 것이 좋음.</p>
+            <p>레이어 필터(LayerMask)가 있어야함</p>
+            <p>Raycast 대상이 많아질수록 의도치 않은 충돌(플레이어 자신, 트리거, 이펙트 등)이 섞이기 쉽습니다. LayerMask로 벽/바닥/적 처럼 대상 범위를 명확히 제한하는 것이 기본임.</p>
+            <p>Trigger 포함 여부가 명확해야함</p>
+            <p>Trigger Collider를 Raycast가 감지하도록 할지 여부는 상황에 따라 달라집니다. 상호 작용(버튼/영역)은 Trigger가 필요 할 수있고, 벽,바닥 판정은 Trigger를 제외하는 편이 자연스러움.</p>
+            <p>구성요소</p>
+            <p>physics.Raycast : Raycast를 실행하는 함수(충돌 여부를 bool로 봔한)</p>
+            <p>origin : ray 시작되는 위치(월드좌표)</p>
+            <p>direction : ray사 진행하는 방향 벡터</p>
+            <p>maxDistance : 검사할 최대 거리</p>
+            <p>layermask: 충돌 검사 대상으로 허용할 레이어 마스크</p>
+            <p>queryTriggerInteraction : Trigger Collider를 포함할지 여부</p>
+            <p>RaycastHit : 충돌 결과 정보를 담는 구조체</p>
+            <p>collider : 맞은 Collider</p>
+            <p>point : 충돌 지점</p>
+            <p>normal : 충돌 표면의 법선 방향</p>
+            <p>distance : origin부터 충돌 지점까지 거리</p>
+            <p>주의사항</p>
+            <p>Collider가 없으면 Raycast로 감지되지 않습니다.</p>
+            <p>오브젝트가 화면에 보여도 Collider가 없으면 Raycast는 아무 것도 맞추지 못함.</p>
+            <p>레이어가 잘못되면 &quot; 맞춰야 할것&quot;을 못 맞춥니다.</p>
+            <p>LayerMask로 필터링한 경우, 대상 오브젝트가 해당 레이어가 아니면 충돌이 발생하지 않음.</p>
+            <p>트리거 포함 설정을 잘못 잡으면 의도치 않게 걸릴 수 있습니다.</p>
+            <p>UI 트리거나 감지용 Trigger가 많은 프로젝트에서는 Trigger 포함 여부에 따라 Raycast 결과가 달라 짐.</p>
+            <p>3D RPG</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>

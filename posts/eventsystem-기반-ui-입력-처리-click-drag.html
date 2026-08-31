@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EventSystem 기반 UI 입력 처리(Click/Drag/Hover) | 이성호</title>
+    <meta name="description" content="EventSystem 기반 UI 입력 처리(Click/Drag/Hover)">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="../resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="../cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="../portfolio.html">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="../blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="#more">More</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <article class="post-article">
+        <a class="back-link" href="../blog.html">블로그로 돌아가기</a>
+        <p class="blog-meta">3D RPG · 2월 1일 · 2분 분량</p>
+        <h1>EventSystem 기반 UI 입력 처리(Click/Drag/Hover)</h1>
+        <img class="post-image" src="https://static.wixstatic.com/media/fa00d9_622460e59d414d11a0c4bdf68afd0a7a~mv2.png/v1/fill/w_740,h_853,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/fa00d9_622460e59d414d11a0c4bdf68afd0a7a~mv2.png" alt="EventSystem 기반 UI 입력 처리(Click/Drag/Hover)">
+        <div class="post-content">
+            <p>최종 수정일: 2월 20일</p>
+            <p>정의</p>
+            <p>EventSystem 기반 UI 입력 처리는 Unity UI 입력처리는Unity UI(UGUI)에서 마우스/터치 입력을 클릭(click),드래그 같은 이벤트로 변환해 UI 오브젝트에 전달하는 방식임. UI 입력은 물리 충돌(physics)이 아니라 UI Raycast(Graphic Raycast)를 통해 처리됨</p>
+            <p>핵심 규칙</p>
+            <p>UI 입력 이벤트는  EventSystem 이 존재할 때만 정상 동작함.</p>
+            <p>canvas는 입력을 받기 위해 Graphic Raycaster가 필요함.</p>
+            <p>(보통 canvas생성시 자동으로 컴포넌트 됨)</p>
+            <p>입력 대상 UI는 보통 Raycast Target이 활성화되어야 포인터가 감지됨.</p>
+            <p>클릭/드래그/호버 처리는 인터페이스 기반 콜백(클릭/드래그 핸들러)로 받는 방식이 표준임</p>
+            <p>호버(Enter/Exit)는 &quot;포인터가 올라갔다/벗어났다&quot;를 의미하며, 클릭이 없어도 발생 할 수 있음.</p>
+            <p>드래그는 &quot;누른 상태에서 이동&quot;을 전제로 하며, 이벤트는 데이터 주로 스크린 좌표를 제공함.</p>
+            <p>UI가 겹칠 경우레이캐스트 결과 우선순위(정렬/레이어/그래픽) 설정에 따라 이벤트가 전달됨.</p>
+            <p>구성요소(용어 정리)</p>
+            <p>EventSystem : UI 입력 이벤트를 생성,전달하는 핵심 시스템 오브젝트</p>
+            <p>Input Moudule : 마우스/터치/기타 입력을 EventSystem 이벤트로 변환하는 모듈</p>
+            <p>(예Standalone/Touch 계열)</p>
+            <p>Graphic Raycaster: Canvas에서 UI요소를 대상으로 레이캐스트를 수행하는 컴포넌트</p>
+            <p>Raycast Target: 해당 UI 그래픽이 레이캐스트에 &quot;잡히는지를&quot; 결정하는 옵션</p>
+            <p>IPointerClickHandler: 클릭 이벤트를 콜백을 받는 인터페이스</p>
+            <p>IDragHandler: 드래그 이벤트를 콜백 받는 인터페이스</p>
+            <p>IPointerEnterHandler : 포인터가 UI 위로 진입 할때(호버 시작) 콜백을 받는 인터페이스</p>
+            <p>IPointerExitHandler : 포인터 입력 정보(위치, 버튼, 드래그 상태 등)를 담는 이벤트 데이터</p>
+            <p>PointerEventData : 포인터 입력 정보(위치, 드래그 상태)를 담는 이벤트 데이터</p>
+            <p>Canvas Render mode:</p>
+            <p>Screen Space/World Space등 UI 좌표,입력 처리에 영향을 주는 캔버스 모드</p>
+            <p>주의사항</p>
+            <p>EvnetSystem이 없거나 Input Module이 비활성/누락되면 클릭/드래그가 발생하지 않음.</p>
+            <p>Raycast Target이 꺼져 있거나, 투명/마스크/레이어 설정으로 레이캐스트가 막히면 입력이  안들어올 수 있음.</p>
+            <p>호버(Enter/Exit)는 포인터가 실제로 레이캐스트 &quot;잡히는 그래픽&quot; 위를 지나야 안정적으로 발생함.(이미지/텍스트가 없는 빈 영역, 레이캐스트 대상이 없는 오브젝트는 기대한 대로 안잡힐 수 있음)</p>
+            <p>드래그에서 제공되는 포인터 위치는 보통 화면 좌표이므로, UI이동/배치 시 캔버스 모드에 따라 좌표 변환이 필요할 수 있음.</p>
+            <p>UI가 서로 겹쳐 있으면 의도한 오브젝트가 아닌 상위(앞쪽)UI가 이벤트를 가져갈 수 있음.</p>
+            <p>Worlid Space Canvas나 카메라 설정에 따라 레이캐스트 기준이 달라져 입력이 예상과 다르게 동작 할 수 있습니다.</p>
+            <p>Enter/Exit는 클릭이 아니라 포인터 이동 기반이라 모바일 환경에서는 기대 빈도/방식이 달라 질 수 있습니다.</p>
+            <p>3D RPG</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>

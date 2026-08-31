@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trigger Event | 이성호</title>
+    <meta name="description" content="Trigger Event">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="../resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="../cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="../portfolio.html">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="../blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="#more">More</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <article class="post-article">
+        <a class="back-link" href="../blog.html">블로그로 돌아가기</a>
+        <p class="blog-meta">2D AppleStory · 4월 23일 · 2분 분량</p>
+        <h1>Trigger Event</h1>
+        <img class="post-image" src="https://static.wixstatic.com/media/fa00d9_4b337a7bd66244149efb1b5a199091b7~mv2.png/v1/fill/w_740,h_733,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/fa00d9_4b337a7bd66244149efb1b5a199091b7~mv2.png" alt="Trigger Event">
+        <div class="post-content">
+            <p>정의</p>
+            <p>Trigger 이벤트는 유니티에서 Collider가 서로 겹쳤을 때 물리적인 충돌 반응 없이 접촉 여부만 감지하고, 특정 로직을 실행하기 위한 이벤트 기반 충돌 처리 방식.</p>
+            <p>오브젝트 간의 실제 물리 충돌(밀림, 반발 등)을 발생시키지 않고, &quot;어떤 대상과 접촉했는지&quot;를 기준으로 후속 동작을 수행하는 데 사용 됨.</p>
+            <p>주로 투사체 피격 판정, 아이템 획득, 범위 진입 감지 등 접촉 자체가 중요한 게림 로직의 시작점 역할.</p>
+            <p>핵심 규칙</p>
+            <p>Collider 중 하나 이상은 반드시 IsTrigger가 활성화되어야 함.</p>
+            <p>Trigger 이벤트는 일반 충돌이 아닌 겹침 감지이므로, 최소 하나의 Collider에 IsTrigger 설정이 필요.</p>
+            <p>Rigidbody가 포함된 오브젝트가 있어야 이벤트가 정상 발생 함.</p>
+            <p>정적인 Collider끼리는 Trigger 이벤트가 호출되지 않을 수 있으므로 물리 엔진과 연결된 객체 필요.</p>
+            <p>접촉 대상 필터링이 반드시 필요함.</p>
+            <p>모든 충돌을 처리하지 않고 Tag, Component 등을 기준으로 원하는 대상만 선별 해야 함.</p>
+            <p>Trigger는 감지 역할만 수행하고 실제 처리 로직은 분리해야 함.</p>
+            <p>Trigger 내부에서는 판정만 하고, 데미지나 상태 변경은 별도의 함수로 넘기는 구조가 안정적</p>
+            <p>1회성 처리 여부를 명확히 해야 함.</p>
+            <p>투사체처럼 한 번만 반응해야 하는 경우, 중복 충돌 방지를 위한 제거 또는 상태 처리가 필요함.</p>
+            <p>구성 요소</p>
+            <p>Trigger Collider</p>
+            <p>물리 충돌 없이 겹침만 감지하도록 설정된 Collider로, Trigger 이벤트의 핵심 조건임.</p>
+            <p>Rigidbody2D</p>
+            <p>Trigger 이벤트를 발생시키기 위해 필요한 물리 컴포넌트로 최소 한쪽 오브젝트에 포함되어야함.</p>
+            <p>접촉대상(Object Reference)</p>
+            <p>충돌 시 전달되는 상대 오브젝트 정보로, 어떤 대상과 접촉했는지 판단하는 기준 임.</p>
+            <p>충돌 필터링 기준(Tag/Component)</p>
+            <p>원하지 않는 충돌을 제외하고 특정 대상만 처리하기 위한 조건.</p>
+            <p>피격 처리 함수(Damage Receiver)</p>
+            <p>Trigger 감지 이후 실제 데미지, 상태 변화 등을  처리하는 로직 진입점 임.</p>
+            <p>유사함수</p>
+            <p>OnTriggerEnter2D</p>
+            <p>Collider 처음 겹쳤을 때 1회 호출되는 Trigger 이벤트 함수 임.</p>
+            <p>OnTriggerStay2D</p>
+            <p>Collider가 겹쳐 있는 동안 지속적으로 호출 되는 이벤트 임.</p>
+            <p>OntriggerExit2D</p>
+            <p>겹침 상태가 종료될 때 호출 되는 이벤트 임.</p>
+            <p>OnCollisionEnter2D</p>
+            <p>물리 충돌이 발생했을 때 호출되며, Trigger와 달리 물리 반응이 포함 됨.</p>
+            <p>주의사항</p>
+            <p>Trigger는 물리 반응이 없기 때문에 위치 제어는 별도로 처리해야 함.</p>
+            <p>겹침만 감지할 뿐, 밀림이나 충돌 반응은 발생하지 안음.</p>
+            <p>중복 호출에 대한 대비가 필요함.</p>
+            <p>같은 대상과 여러 Collider가 겹치면 이벤트가 여러번 발생할 수 있음.</p>
+            <p>부모/자식 구조에 따라 대상 판별 방식이 달라질 수 있음.</p>
+            <p>자식 Collider에만 충돌이 들어오는 경우, 상위 오브젝트 기준으로 판별하는 처리가 필요.</p>
+            <p>이벤트 내부에서 과도한 로직을 처리하면 성능 문제가 발생할 수 있음.</p>
+            <p>Trigger는 자주 호출되므로, 최소한의 판정 후 외부 함수로 위임하는 것이 좋음.</p>
+            <p>투사체 처리 시 즉시 제거 타이밍을 고려해야 함.</p>
+            <p>제거 시점이 늦으면 다중 히트, 너무빠르면 후속처리 누락이 발생할 수 있음.</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>

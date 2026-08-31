@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>유니티 실행주기 관계성 | 이성호</title>
+    <meta name="description" content="유니티 실행주기 관계성">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="../resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="../cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="../portfolio.html">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="../blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="#more">More</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <article class="post-article">
+        <a class="back-link" href="../blog.html">블로그로 돌아가기</a>
+        <p class="blog-meta">3D RPG · 3월 11일 · 2분 분량</p>
+        <h1>유니티 실행주기 관계성</h1>
+        <img class="post-image" src="https://static.wixstatic.com/media/fa00d9_d4c046b6f6e64e6e86ec63c35f45d48c~mv2.png/v1/fill/w_740,h_860,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/fa00d9_d4c046b6f6e64e6e86ec63c35f45d48c~mv2.png" alt="유니티 실행주기 관계성">
+        <div class="post-content">
+            <p>정의</p>
+            <p>유니티 실행주기 관계성은 Start에서 초기 1회 준비, Update에서 매 프레임 반복 검사/처리를 역할 분리하여, 게임 로직이 예측 가능하고 안정적으로 동작하도록 만드는 설계 방식임. 보통 Start에서는 참조 연결·이벤트 구독·초기값 세팅을 하고, Update에서는 조건을 계속 확인하며 필요한 동작을 트리거함.</p>
+            <p>핵심 규칙</p>
+            <p>Start는 1회성 준비만 담당함.</p>
+            <p>초기 연결/등록/캐싱/초기화처럼 한 번만 하면 되는 작업을 모음.</p>
+            <p>Update는 상태를 감시하고 조건을 만족할 때만 실행함.</p>
+            <p>Update는 자체가 로직 실행 장소가 아니라, 조건 체크 → 필요한 동작 호출의 트리거로 쓰는 게 안정적.</p>
+            <p>Start에서 이벤트 구독을 할 때는 중복 구독을 방지해야 함.</p>
+            <p>같은 콜백이 여러 번 등록되면 기대보다 많은 횟수로 실행 될 수 있으므로, 구독 전에 해제하는 습관이 안전함.</p>
+            <p>Update에서 반복 호출되는 동작은 &#x27;중복 실행 방지 장치&#x27;가 필요 함.</p>
+            <p>예를 들어 코루틴을 Update에서 시작한다면, 매 프레임 새로 시작되지 않도록 예약 재진입 방지 기준을 둠.</p>
+            <p>시간 지연이 필요한 로직은 Update에서 직접 처리 하지 말고 별도 흐름으로 분리함.</p>
+            <p>Update는 시작 조건만 담당하고 , 실제 지연/대기는 코루틴이나 타이머로 넘기는 쪽이 구조가 깔끔.</p>
+            <p>구성 요소</p>
+            <p>Start(): 오브젝트 활성화 후 첫 프레임 전에 1회 호출되는 초기화 함수.</p>
+            <p>Update(): 매 프레임 호출되며 조건 감시/입력 처리/상태 전환 트리거에 주로 사용.</p>
+            <p>이벤트 구독/해제: 외부 변화를 받아 내부 상태를 업데이트하는 연결 방식.</p>
+            <p>상태 변수: Update에서 지금 실행해야 하는가를 판단하는 기준 데이터.</p>
+            <p>유사함수</p>
+            <p>Awake(): 컴포넌트가 로드될 때 가장 먼저 1회 호출되는 초기 준비 지점.</p>
+            <p>OnEnable(): 오브젝트/컴포넌트가 활성화될 때마다 호출되어 &quot;구독/해제&quot;와 잘 맞음.</p>
+            <p>FixedUpdate(): 물리 업데이트 주기에 맞춰 호출되어 Rigidbody 기반 로직에 적합함.</p>
+            <p>LateUpdate(): Update 이후에 호출되어 카메라 추적/후처리 같은 마무리 갱신에 유용.</p>
+            <p>OnDisable(): 비활성화될 때 호출되어 이벤트해제 같은 정리 작업에 사용 함.</p>
+            <p>주의 사항</p>
+            <p>Update에 무거운 작업을 넣으면 프레임이 드랍이 바로 발생함.</p>
+            <p>반복 실행이 필요한지부터 점검하고, 가능하면 조건 체크만 남기고 실행은 분리하는 편이 안전</p>
+            <p>Update에서 코루틴을 시작할 때 중복 실행이 가장 흔한 함정임.</p>
+            <p>조건이 같은 상채로 유지되면 매 프레임 시작될 수 있으니, 예약 카운트/플래그처럼 재진입 방지 기준이 필수</p>
+            <p>이벤트를 Start에서만 구독하고 해제하지 않으면, 씬 전환에서 문제가 생길 수 있음.</p>
+            <p>반복 활성화되는 구조라면 OnEnable/OnDisable에서 구독/해제를 맞추는 방식이 더 안전.</p>
+            <p>Start 호출 시점에 의존하는 참조는 실행 순서에 영향을 받을 수 있음.</p>
+            <p>어떤 객체가 먼저 준비되는지에 따라 null 문제가 날 수 있으므로, 초기화 책임을 명확히 나누거나 실행 순서를 고려해야 함.</p>
+            <p>조건이 &#x27;현재 값&#x27;만 기준이면 비동기 흐름에서 과다 실행이 생길 수 있음.</p>
+            <p>지연 실행이 섞일 때는 &quot;현재 + 예약&quot;처럼 미래에 반영될 변화까지 포함해 판단하는 방식</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>

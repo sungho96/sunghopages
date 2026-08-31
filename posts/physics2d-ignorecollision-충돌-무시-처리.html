@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Physics2D.IgnoreCollision(충돌 무시 처리) | 이성호</title>
+    <meta name="description" content="Physics2D.IgnoreCollision(충돌 무시 처리)">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="../resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="../cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="../portfolio.html">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="../blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="#more">More</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <article class="post-article">
+        <a class="back-link" href="../blog.html">블로그로 돌아가기</a>
+        <p class="blog-meta">2D AppleStory · 3월 24일 · 2분 분량</p>
+        <h1>Physics2D.IgnoreCollision(충돌 무시 처리)</h1>
+        <img class="post-image" src="https://static.wixstatic.com/media/fa00d9_80c8169298194fdb8231a13fa525c1a8~mv2.png/v1/fill/w_740,h_725,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/fa00d9_80c8169298194fdb8231a13fa525c1a8~mv2.png" alt="Physics2D.IgnoreCollision(충돌 무시 처리)">
+        <div class="post-content">
+            <p>정의</p>
+            <p>Collider2D는 유니티 2D 물리 시스템에서 오브젝트의 충돌 영역을 정의하는 컴포넌트임.</p>
+            <p>Sprite나 GameObject 자체는 물리 충돌을 처리할 수 없기 때문에, Collider2D를 통해 물리 엔진이 인식 할 수 있는 충돌 형태(Shape)를 제공해야함.</p>
+            <p>Collider2D는 Rigidbody2D와 함께 사용될 때 물리 충돌 계산이 이루어지며, Trigger 모드로 설정 할 경우 충돌 판정만 수행하고 물리 반응은 발생하지 않는 이벤트 감지 영역이으로 사용할 수 있음.</p>
+            <p>2D 게임에서는 캐릭터 지형 공격 판정, 아이템 획득 범위 등 게임 상호작용 대부분이 Collider2D기반으로 처리 함.</p>
+            <p>핵심 규칙</p>
+            <p>Rigidbod2D와의 관계를 이해해야 함.</p>
+            <p>Collider2D만 존재하면 물리 계산이 제한되며, Rigidbody2D가 있어야 완전한 물리 상호작용이 발생함.</p>
+            <p>Trigger와 Collision의 역할을 구분해야 함.</p>
+            <p>Collider2D는 두 가지 충돌 방식으로 동작함.</p>
+            <p>Trigger → 감지 영역</p>
+            <p>Collision → 물리 충돌</p>
+            <p>Layer 기반 충돌 필터링을 사용해야 함.</p>
+            <p>Collider2D 충돌은 Layer Collision Matrix와 Layer 설정에 의해 필터링됨.</p>
+            <p>Player ↔ Enemy 충돌</p>
+            <p>Player ↔ Item Trigger</p>
+            <p>Enemy ↔ Enemy 충돌 무시</p>
+            <p>Layer를 활용하면 불필요한 물리 계산을 줄이고 충돌 구조를 명확히 설계 할 수 있음.</p>
+            <p>Collider 형태는 목적에 맞게 선택해야 함.</p>
+            <p>Collider2D는 여렅 형태가 있으며 게임 오브젝트 형태에 맞는 Collider를 선택하는 것이 중요 함.</p>
+            <p>불필요하게 복잡한 Collider를 사용할 경우 물리 연산 비용이 증가 할 수 있음.</p>
+            <p>구성 요소</p>
+            <p>Collider2D</p>
+            <p>2D 물리 충돌 영역을 정의하는 기본 컴포넌트.</p>
+            <p>BoxCollider2D</p>
+            <p>사각형 형태 충돌 영역을 생성하는 Collider</p>
+            <p>CircleCollider2D</p>
+            <p>원형 충돌 영역을 생성하는 Collider</p>
+            <p>CapsuleCollider2D</p>
+            <p>캐릭터 몸체에 적합한 타원형 충돌 영역을 제공하는 Collider.</p>
+            <p>PolygonCollider2D</p>
+            <p>복잡한 Sprite 형태를 기반으로 자동 생성되는 충돌 영역</p>
+            <p>CompositeCollider2D</p>
+            <p>여러 Collider를 하나의 충돌 형태로 결합하는 Collider</p>
+            <p>IsTrigger</p>
+            <p>물리 충돌 대신 Trigger 이벤트만 발생하도록 설정하는옵션</p>
+            <p>Physics material 2D</p>
+            <p>마찰(Fricition)과 반발력(Bounciness)을 설정하는 물리 채질</p>
+            <p>유사함수</p>
+            <p>Physics2D.IgnoreCollision</p>
+            <p>두 Collider 간의 충돌 런타임에서 무시하거나 다시 활성화하는 함수.</p>
+            <p>physics2D.Raycast</p>
+            <p>특정 방향으로 레이 충돌을 검사하는 물리 탐지 함수.</p>
+            <p>Collider2D.OverlapPoint</p>
+            <p>특정 좌표가 Collider 내부에 포함되는지 검사하는 함수.</p>
+            <p>Collider2D.Distance</p>
+            <p>두 Collider사이의 거리 정보를 계산하는 함수.</p>
+            <p>Physics2D.OverlapCircle</p>
+            <p>원형 범위 내 Collider를 탐지하는 물리 검사 함수.</p>
+            <p>주의 사항</p>
+            <p>Collider만으로 이동을 처리하면 물리 충돌 문제가 발생할 수 있음.</p>
+            <p>Transform을 직접 이동시키는 경우 물리 엔진과 충돌 계산이 어긋날 수 있으며, Rigidbody2D 기반 이동을 사용하는 것이 안정적임.</p>
+            <p>Collider 크기와 sprite 크기가 일치하지 않을 수있음</p>
+            <p>Sprite의 시각적 크기와 Collider영역이 다르면 충돌 판정이 부자연스럽게 보일 수 있으므로 항상 확인이 필요함.</p>
+            <p>Trigger Collider는 물리 반응이 발생하지 않음.</p>
+            <p>Triiger는 충돌 이벤트만 발생하기 때문에, 물리 반응이 필요한 경우 Collision을 사용해야 함.</p>
+            <p>Collider 개수가 많을 수록 물리 계산 비용이 증가함.</p>
+            <p>씬에 Collider가 과도하게 많거나 복잡한 형태일 경우 물리 성능에 영향을 줄 수 있음.</p>
+            <p>2D AppleStory</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>

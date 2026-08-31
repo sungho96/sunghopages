@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>UI상호작용 설계(선택 상태 동기화) | 이성호</title>
+    <meta name="description" content="UI상호작용 설계(선택 상태 동기화)">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="../resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="../cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="../portfolio.html">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="../blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="#more">More</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <article class="post-article">
+        <a class="back-link" href="../blog.html">블로그로 돌아가기</a>
+        <p class="blog-meta">3D RPG · 2월 8일 · 1분 분량</p>
+        <h1>UI상호작용 설계(선택 상태 동기화)</h1>
+        <img class="post-image" src="https://static.wixstatic.com/media/fa00d9_40e90472db5e4090ab6d42d0337dddad~mv2.png/v1/fill/w_611,h_866,al_c,q_90,enc_avif,quality_auto/fa00d9_40e90472db5e4090ab6d42d0337dddad~mv2.png" alt="UI상호작용 설계(선택 상태 동기화)">
+        <div class="post-content">
+            <p>최종 수정일: 2월 20일</p>
+            <p>정의</p>
+            <p>UI상호작용 설게(선택 상태 동기화)는 UI 요소가 클릭/호버 같은 입력을 받았을 때, 논리 상태(선택됨/헤제됨)와 시각적 표시(하이라이트/선택 마크 등)가 항상 같은 결과를 갖도록 구성하는 방식임. 핵심은 &quot;입력 처리&quot;가 아니라, 입력 이후에 발생하는 UI 반응이 일관되고 예측 가능하게 유지되도록 설계하는 데 있음.</p>
+            <p>핵심규칙</p>
+            <p>선택 여부는 반드시 명확한 상태(Selected State)으로 관리함.</p>
+            <p>시각적표시는 상태 값을 따라가야 하며, 표시를 직접 토글하는 로직은 한곳에 모음.</p>
+            <p>클릭은 상태를 바꾸는 트리거이고, 동기화 함수는 그 상태를 기준으로 표시를 갱신하는 역할로 분리함.</p>
+            <p>초기화 시점에 선택 표시를 한 번 동기화하여, 시작 시 표시가 남거나 틀어지는 문제를 방지 함.</p>
+            <p>호버는 선택 상태와 분리하여, &quot;툴팁  표시/숨기&quot;처럼 단방향 동작으로 단순화함.</p>
+            <p>다중 선택/단일 선택 정책은 미리정하고 단일 선택이라면 선택 권한을 상위 컨테이너(목록/인벤/UI)가 가지는 구조가 확장에 유리함.</p>
+            <p>구성 요소(용어 정리)</p>
+            <p>선택 상태(Selected State): UI  항목이 선택되었는지 나타내는 논리 값(예: true/false)</p>
+            <p>선택 표시(Selected Visual): 선택 상태를 보여주는 UI 요소(선택 배경, 체크 마크, 테두리 강조 등)</p>
+            <p>상태-표시 동기화 함수 : 선택 상태를 읽고 선택 표시를 갱신하는 단일 함수</p>
+            <p>(Refresh/UpdateSelected)</p>
+            <p>Owner(상위 UI/컨테이너): 툴팁/상세 패널/ 단일 선택 정책 같은 &quot;공통 기능을&quot; 관리하는 상위 UI</p>
+            <p>주의 사항</p>
+            <p>선택표시를 여러함수에 각각 제어하면 상태와 표시가 어긋나기 쉬워 동기화 함수를 단일 진입점으로 유지하는 것이 안전함.</p>
+            <p>초기 데이터(이름/아이콘 등) 늦게 설정 될 수 있으면 초기화 시점에 텍스트/표시가비거나 이전 값이 남을 수 있어 초기 갱신 순서를 고정해야 함.</p>
+            <p>호버로 띄운 툴팁이 깜빡이거나 예상과 다르게 동작한다면, 대부분 &quot;포인터가 잡히는 대상&quot;이 변하는 문제이므로 레이캐스트 대표상/표시 기준을 단순화해야함.</p>
+            <p>단일 선택을 원하면서 항목이 스스로 토글을 결정하면, 서로 다른 항목이 동시에 선택되는 등 정책 충돌이 생기므로 선택정책은 상위에서 통제하는 편이 좋음.</p>
+            <p>선택 표시를 SetActive로 관리할때 비화성화된 오브젝트에 걸린 UI 구성 요소가 다른 연출과 충돌 할 수 있으니 표시 방식을 일관되게 정해두는 것이 좋음.</p>
+            <p>3D RPG</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>

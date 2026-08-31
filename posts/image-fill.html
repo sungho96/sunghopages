@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Image Fill | 이성호</title>
+    <meta name="description" content="Image Fill">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="../resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="../cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="../portfolio.html">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="../blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="#more">More</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <article class="post-article">
+        <a class="back-link" href="../blog.html">블로그로 돌아가기</a>
+        <p class="blog-meta">3D RPG · 2월 4일 · 1분 분량</p>
+        <h1>Image Fill</h1>
+        <img class="post-image" src="https://static.wixstatic.com/media/fa00d9_ac0203c907ae4069b95e08adf32dc12b~mv2.png/v1/fill/w_740,h_776,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/fa00d9_ac0203c907ae4069b95e08adf32dc12b~mv2.png" alt="Image Fill">
+        <div class="post-content">
+            <p>최종 수정일: 2월 20일</p>
+            <p>정의</p>
+            <p>Fill은 Unity UI Imgae 컴포넌트가 가진 게이지(gague) 표현 방식 입니다. fillAmout 값에 따라 이미지가 가로/세로/원형 등 지정한 방향으로 비율만큼 채워진 상태로 렌더링됨. 체력/마나/경험치 같은 &quot;현재값이 최대값에 대해 어느 정도 인지를 시각적으로 전달할 때 주로 사용 됨.</p>
+            <p>핵심 규칙</p>
+            <p>Fill을 쓰려면 Image의 Type이 Filled여야 함.</p>
+            <p>fillAmount는 0~1 범위의 정규화 값만 의미가 있음.</p>
+            <p>현재/최대 형태의 수치는 정규화(현재 + 최대)  후 사용해야 함.</p>
+            <p>최대값이 0이거나 너무 작을 수있으므로 0나누기 방지가 필수임.</p>
+            <p>값이 범위를 벗어나도 UI가 깨지지 않도록 Clamp(0~1 제한) 처리가 안전함.</p>
+            <p>Fill 방향/형태는 Fill Method/Origin/Clockwise 설정에 의해 결정됨.</p>
+            <p>Fill은 표시 계층이므로, 실제 수치의 신뢰성보다 안정적 렌더링 규칙을 우선으로 함.</p>
+            <p>구성요소(용어 정리)</p>
+            <p>Image(Typed : filled) : 채움 렌더링을 활성화하는 Image 타입</p>
+            <p>FillAmount : 채움 비율(0= 비어있음 1= 가득참)</p>
+            <p>Fill Method : 채워지는 방식(가로/세로/방사형 등)</p>
+            <p>Origin: 시작 방향(왼쪽/오른쪽/위/아래 원형 시작점)</p>
+            <p>Clockwise: 방사형 채움에 시계/반시계 방향 선택</p>
+            <p>정규화(Normalization) : 현재값을 최대값으로 나눠 0~1로 변환하는 과정</p>
+            <p>Clamp01: 값을 0~1로 강제 제한하는 처리</p>
+            <p>0 나누기 방지(Epsilon 체크): 최대값이 0 또는 극소일 때 게산을 회피하는 안전 처리</p>
+            <p>주의사항</p>
+            <p>Type이 Filled가 아니면 fillAmount를 바꿔도 시각 변화가 없을 수 있음.</p>
+            <p>fillAmount에 0~1 밖의 값이 들어가면 예상치 못한 표시가 나올 수 있어 제한이 필요함.</p>
+            <p>최대값이 0인 상황(초기화 전, 설정 누락 등)에서 정규화하면 Nan/Infinity가 발생해 UI가 깨질 수 있음.</p>
+            <p>Fill Method/Origin 설정이 잘못되면 체력바가 반대로 줄어든다. 처럼 방향 문제가 생김..</p>
+            <p>마스크/레이아웃/스프라이트 설정(특히 슬라이스)과 조합에 따라 채움이 의도와 다른 게 보일 수 있으니, 시각 결과를 기준으로 설정을 고정하는 것이 안전함.</p>
+            <p>매 프레임 갱신은 단순하지만, 필요 이상으로 자주 갱신하면 UI 갱신 비용이 누적될 수 있어 변경 시점 갱신도 고려해야 함.</p>
+            <p>3D RPG</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vecto3.sqrMagnitude | 이성호</title>
+    <meta name="description" content="Vecto3.sqrMagnitude">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="../resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="../cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="../portfolio.html">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="../blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="#more">More</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <article class="post-article">
+        <a class="back-link" href="../blog.html">블로그로 돌아가기</a>
+        <p class="blog-meta">TowerRandomDefence · 1월 27일 · 1분 분량</p>
+        <h1>Vecto3.sqrMagnitude</h1>
+        <img class="post-image" src="https://static.wixstatic.com/media/fa00d9_0d7b2c972dee424abd5c21c726f65e1a~mv2.png/v1/fill/w_740,h_744,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/fa00d9_0d7b2c972dee424abd5c21c726f65e1a~mv2.png" alt="Vecto3.sqrMagnitude">
+        <div class="post-content">
+            <p>개요</p>
+            <p>vector3.sqrMagnitude는 벡터 길이(=magnitude)의 제곱 값을  반환합니다.</p>
+            <p>magnitude 또는 vector3.Distance처럼 실제 거리를 구하는 연산은 일반적을 sqrt를 포함 할 수 있는데, sqrMagnitude는 이과정을 생략하고 비교용 값을 제공하는 데 목적이 있습니다.</p>
+            <p>정의</p>
+            <p>vector3.Magnitude (벡터 길이)</p>
+            <p>vector3.sqrMagnitude(벡터 길이의 제곱)</p>
+            <p>사용목적</p>
+            <p>거리 비교 최적화</p>
+            <p>반복적으로 가까운가? 사거리 체크 같은 비교를 수행할때, sqrt가 포함될 수 있는 Distance 대시 sqrMagnitude를 사용하면 연산 비용을 줄일 수 있습니다.</p>
+            <p>nearest(최단거리) 탐색 최적화</p>
+            <p>여러 대상 중 가장 가까운 대상을 찾는 루프에서 거리 계산이 누적되므로, 비교만 필요하다면 sqrMagnitude가 적합합니다.</p>
+            <p>주로 사용하는 곳</p>
+            <p>타워 디펜스 사거리 판정(공격 가능 여부)</p>
+            <p>가장 가까운 적/오브젝트 선택(타겟팅)</p>
+            <p>일정 거리 이내에서만 UI/이펙트 활성화</p>
+            <p>웨이포인트 도착 판정(“충분히 가까워졌는지”)</p>
+            <p>Update/LateUpdate에서 반복되는 거리 체크 최적화</p>
+            <p>주의사항</p>
+            <p>단위가 다르다</p>
+            <p>magnitude/Distance는 거리, sqrMagnitude는 거리² 입니다.</p>
+            <p>표시/로그에는 magnitude가 더 직관적</p>
+            <p>디버깅에서 “정확한 거리(m)”를 출력하고 싶다면 magnitude가 읽기 쉽습니다.</p>
+            <p>TowerRandomDefence</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>

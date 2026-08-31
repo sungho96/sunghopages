@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RectTransform | 이성호</title>
+    <meta name="description" content="RectTransform">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="../resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="../cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="../portfolio.html">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="../blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="#more">More</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <article class="post-article">
+        <a class="back-link" href="../blog.html">블로그로 돌아가기</a>
+        <p class="blog-meta">3D RPG · 2월 3일 · 1분 분량</p>
+        <h1>RectTransform</h1>
+        <img class="post-image" src="https://static.wixstatic.com/media/fa00d9_c20b4f74777c4b7e9e310d48176b593e~mv2.png/v1/fill/w_740,h_371,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/fa00d9_c20b4f74777c4b7e9e310d48176b593e~mv2.png" alt="RectTransform">
+        <div class="post-content">
+            <p>최종 수정일: 2월 20일</p>
+            <p>Canvas/Scaler 설정: Overlay + Scale With Screen Size(Reference Resolution 기준</p>
+            <p>툴팁 패널 RectTransform: 앵커·피벗·크기(Width/Height) 확인</p>
+            <p>정의</p>
+            <p>RectTransform은 Unity UI에서 위치/크기/정렬 기준을 담당하는 Transform이며,</p>
+            <p>Canvas(UI 루트) 기준 좌표계를 사용함.</p>
+            <p>툴팁 UI는 보통 RectTransform으로 패널(DetailPanle)의 표시/숨김을 제어하고, 필요하다면 포인터 위치에 맞춰 UI 좌표로 배치함.</p>
+            <p>핵심규칙</p>
+            <p>UI 배치는 Transform.postition 보다 RectTransform의 anchoredPosition/Anchor/Pivot 개념이 중심임</p>
+            <p>UI 패널은 보통 SetActive로 표시 상태를 관리하고, 내용(Text)는 표시 직전에 갱신함.</p>
+            <p>툴팁이 &quot; 마우스 근처에 뜨는 UI&quot;라면 포인터(screen 좌표)를 Canvas 로컬 좌표로 변환해 RectTransform에 적용하는 방식이 기본임.</p>
+            <p>툴팁 패널은 화면 밖으로 나갈 수 있으므로, 실제 서비스에서는 클램프 처리를 고려함.</p>
+            <p>구성 요소(용어 정리)</p>
+            <p>Canvas : UI가 그려지는 루트, Render Mode에 따라 좌표 변환 방식이 달라질 수 있음.</p>
+            <p>RectTransform: UI 전용 Transform, 앵커/피봇/사이즈/앵커 기준위치를 가짐</p>
+            <p>DetailPanel(툴팁 패널) : 상세 정보 UI. 보통 처음에 비활성화 후 필요할 때 활성화.</p>
+            <p>GridPanel(Content) : 아이템 슬롯들이 들어가는 부모. GridLayoutGroup 같은 레이아웃 컴포넌트가 붙는 경우가 많음.</p>
+            <p>주의 사항</p>
+            <p>Anchor가 바뀌면 같은 값도 의미가 바뀜.</p>
+            <p>Pivot은 위치 계산과 회전/스케일 기준을 바꿈.</p>
+            <p>Transform.Position으로 UI를 만지면 예상과 다르게 보일 수 있음.</p>
+            <p>부모 Canvas/부모 RectTransform의 스케일 영향이 큼.</p>
+            <p>World Space Canvas에서는 좌표감각이 달라짐.</p>
+            <p>3D RPG</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>

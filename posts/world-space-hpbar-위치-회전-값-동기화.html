@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>World Space HPBar(위치,회전 ,값 동기화) | 이성호</title>
+    <meta name="description" content="World Space HPBar(위치,회전 ,값 동기화)">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="../resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="../cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="../portfolio.html">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="../blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="#more">More</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <article class="post-article">
+        <a class="back-link" href="../blog.html">블로그로 돌아가기</a>
+        <p class="blog-meta">3D RPG · 2월 24일 · 2분 분량</p>
+        <h1>World Space HPBar(위치,회전 ,값 동기화)</h1>
+        <img class="post-image" src="https://static.wixstatic.com/media/fa00d9_585d34106a254131b3943094b2fcab43~mv2.png/v1/fill/w_740,h_356,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/fa00d9_585d34106a254131b3943094b2fcab43~mv2.png" alt="World Space HPBar(위치,회전 ,값 동기화)">
+        <div class="post-content">
+            <p>정의</p>
+            <p>World Space HPBar는 월드 공간에 배치된 체력 UI를 캐릭터의 위치를 기준으로 머리 위에 고정하고, 카메라 방향에 맞춰 항상 정면을 유지하며, 현재 체력 값을 0~1 비율로 Slider 같은 게이지 UI에 반영하는 방식임.</p>
+            <p>핵심 규칙</p>
+            <p>동기화 대상은 3가지로 고정: 위치/회전/값</p>
+            <p>월드 HP바는 따라다니기+보기좋게+정확한 표시가 핵심이므로, 이 3가지를 기준으로 설계를 단순화함.</p>
+            <p>위치 동기화는 &#x27;앵커 기준&#x27;이 먼저임</p>
+            <p>캐릭터 루트/머리 본/전용 포인트/콜라이더 높이 등 기준을 하나로 정하고, 그 기준에서 오프셋을 적용해야 흔들림이 줄어듬.</p>
+            <p>회전 동기화는 &#x27;카메라 기준&#x27;으로 통일</p>
+            <p>카메라를 바라보게 만드는 방식은 하나로 고정해야 UI가 뒤집히거나 급격히 튀는 현상을 줄일 수 있음.</p>
+            <p>값 동기화는 &#x27;정규화(0~1)&#x27;가 표준</p>
+            <p>HP/MaxHP로 0~1 범위를 만들고 UI에 반영하면 Slider/Fill 등 표현 컴포넌트가 달라도 재사용이 쉬움.</p>
+            <p>반복 호출 비용은 최소화</p>
+            <p>매 프레임 탐색이 누적되면 개체 수가 늘 때 성능 병목이 되므로 참조는 캐싱하고 갱신은 계산 중심으로 유지하는 편이 안전 함.</p>
+            <p>구성 요소(용어 정리)</p>
+            <p>World Space Canvas: 3D 공간에 존재하는 캔버스 모드로, 캐릭터 위에 UI를 뛰우는 방식에 사용</p>
+            <p>Anchor: HP바가 따라갈 대상 Transform</p>
+            <p>Offset: 기준점에서 위로 뛰우는 거리</p>
+            <p>Billboard(회전 동기화): UI가 카메라를 향해 정면을 유지하도록 회전을 맞추는 기법</p>
+            <p>Normalization: 현재값/최대값을 0~1로 변환하는 과정</p>
+            <p>Slider/ Image Fill: 0~1값으로 게이지를 표현하는 UI컴포넌트</p>
+            <p>Caching:  Stat,Colider,Camera 참조를 미리 저장해 반복 탐색 비용을 줄이는 방식</p>
+            <p>유사함수</p>
+            <p>Transform.LookAt: 특정 대상을 바라보도록 회전시켜 빌보드 구현 활용</p>
+            <p>Camera.main : MainCamera 태그 카메라에 접근하는 편의 속성이지만 탐색 비용/의존성이 생길 수 있음.</p>
+            <p>GetComponent&lt;T&gt;(): 컴포넌트를 탐색하는 함수로, 반복 호출 시 성능에 영향을 줄 수 있음.</p>
+            <p>Slider.Value: 0~1 범위 값을 받아 게이지 표현을 갱신.</p>
+            <p>Mathf.Clamp01: 비율 값을 0~1로 강제해 UI 값 안정성을 높일 때 사용 됨.</p>
+            <p>주의사항</p>
+            <p>Camera.main 의존성: MainCamera 태그가 없거나 카메라가 교체되면 회전 동기화가 깨질 수 있음.</p>
+            <p>콜라이더 기반 높이 산정의 변동성: 스케일/애니메이션/콜라이더 형태에 따라 머리 위치가 기대 다르게 보일 수있음.</p>
+            <p>반복 GetComponent 호출 누적: 많은 캐릭터가 존재하면 매 프레임 탐색 비용이 커질 수 있어 캐싱이 권장.</p>
+            <p>값 정규화 예외 처리: 최대 체력이 0이 되는 순간이 있으면 Nan/오류가 발생할 수 있으므로 방어가 필요.</p>
+            <p>회전 동기화의 과도한 기울기: 카메라 피치가 큰 상황에서 UI가 과하게 기울어 가독성이 떨어질 수 있어 축 제한이 필요할 수 있음.</p>
+            <p>월드 UI 겹침 문제: 다수의 HP바가 겹치면 가독성이 급격히 떨어지는 거리 기반 스케일,표시 조건,정렬 정책이 필요 해질 수 있음.</p>
+            <p>3D RPG</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>

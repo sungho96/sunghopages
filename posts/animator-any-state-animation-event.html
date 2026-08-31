@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Animator(Any State, Animation Event) | 이성호</title>
+    <meta name="description" content="Animator(Any State, Animation Event)">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="../resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="../cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="../portfolio.html">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="../blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="#more">More</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <article class="post-article">
+        <a class="back-link" href="../blog.html">블로그로 돌아가기</a>
+        <p class="blog-meta">3D RPG · 2월 22일 · 1분 분량</p>
+        <h1>Animator(Any State, Animation Event)</h1>
+        <img class="post-image" src="https://static.wixstatic.com/media/fa00d9_de4b3bd927fb4a2a8ee1e29bbffc9a15~mv2.png/v1/fill/w_740,h_346,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/fa00d9_de4b3bd927fb4a2a8ee1e29bbffc9a15~mv2.png" alt="Animator(Any State, Animation Event)">
+        <div class="post-content">
+            <p>정의</p>
+            <p>Animator 기반 전투 제어는 Any State를 통해 어느 상태에서든 공격/스킬 애니메이션으로 즉시 전환하고, 타격/종료 같은 결정적 시점을 Animatoin Event로 처리해 전투 루프와 상태 복귀를 안정적으로 구현하는 방식 임.</p>
+            <p>핵심 규칙</p>
+            <p>전투 진입은Any State로 통일하는 것이 정석임.</p>
+            <p>타격 판정과 종료는 Animation Event 기준으로 결정해야 함.</p>
+            <p>Attack/Skill은 &quot;재생&quot;과 &quot;복귀&quot; 책임을 분리 해야 함.</p>
+            <p>연속 공격은 이벤트 시점에서 다음 재생 여부를 결정해야 함.</p>
+            <p>전이 옵션(Has Exit Time, Duration, Interruption)이 코드 보다 체감에 더 큰 영향을 줌.</p>
+            <p>구성 요소(용어 정리)</p>
+            <p>Any State: 현재 어떤 상태든 무시하고 조건만 맞으면 특성 상태로 즉시 전환 시키는 진입점.</p>
+            <p>State: 공격/스킬 클립을 재생하는 상태 노드.</p>
+            <p>Transition: 상태 간 전환 규칙이며 조건, Exit Time, Duration, 인터럽트 등 포함.</p>
+            <p>Animation Clip: 실제 모션 데이터이며 길이, Loop 여부, Root Motion 커브 포함</p>
+            <p>Animation Event: 클립 타임라인 특정 프레임에서 함수를 호출하는 이벤트</p>
+            <p>Root Motion: 클립이 위치/회전을 이동시키는 커브를 포함하는 방식이며 이동 시스템과 충돌 할 수 있음.</p>
+            <p>Parameters: 전이 조건을 만드는 입력 값(Trigger/Bool/Int/Float)</p>
+            <p>유사함수</p>
+            <p>Animator.CrossFade: 현재 상태에서 목표 상태로 블렌딩 전환하여 공격/스킬 진입에 사용 함.</p>
+            <p>Animator.Play: 목표 상태를 즉시 재생하여 스냅 전환이 필요할때 사용함.</p>
+            <p>Animator.StingToHash: 이름 기반 접근을 해시로 바꿔 성능과 안정성을 높임.</p>
+            <p>Animator.SetTrigger: 일회성 전이 신호를 보내 Any State 전이를 유도함.</p>
+            <p>Animator.GetCurrentAnimatorStateInfo: 현재 상태/시간을 읽어 중복 재생을 방지함.</p>
+            <p>주의사항</p>
+            <p>Any State 전이가 많은면 의도치 않은 끼어들기가 발생 할 수 있음.</p>
+            <p>Has Exit Time 설정은 입력이 늦게 먹는 것처럼 보이게 만듦.</p>
+            <p>Transition Duration이 길면 공격 시작과 타격 프레임 체감이 어긋날 수 있음.</p>
+            <p>Animation Event 누락/오타/시그니처/불일치는 종료 복귀나 루프를 망가뜨림.</p>
+            <p>Root Motion 커브가 있는 클립은 NavMesh/Transform 이동과 출돌하여 떨림이나 워프를 만듦.</p>
+            <p>같은 상태로 CrossFade를 반복 호출하면 애니메이션 계속 처음 부터 재시작 될 수 있음.</p>
+            <p>3D RPG</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>virtural&amp;override | 이성호</title>
+    <meta name="description" content="virtural&amp;override">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="../resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="../cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="../portfolio.html">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="../blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="#more">More</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <article class="post-article">
+        <a class="back-link" href="../blog.html">블로그로 돌아가기</a>
+        <p class="blog-meta">3D RPG · 3월 2일 · 2분 분량</p>
+        <h1>virtural&amp;override</h1>
+        <img class="post-image" src="https://static.wixstatic.com/media/fa00d9_dce4d04874904002800e5ff849c185c0~mv2.png/v1/fill/w_740,h_595,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/fa00d9_dce4d04874904002800e5ff849c185c0~mv2.png" alt="virtural&amp;override">
+        <div class="post-content">
+            <p>정의</p>
+            <p>가상함수와 오버라이딩은 상속 관계에서 부모 클래스의 기본 동작을 자식 클래스가 확장 재정의 할 수 있게 하는 객체지향 기능임.</p>
+            <p>가상함수(virtual): 부모 클래스에서 &quot;필요하면 자식이 바꿔서 사용을 할 수 있음&quot;을 열어둔 함수</p>
+            <p>오버라이딩(override): 자식 클래스에서 부모의 가상함수를 같은 시그니처로 재정의 하여 실제 					동작을 바꾸는 것</p>
+            <p>Unity에서는 상태별 처리, 공통 베이스 클래스 설계, 프레임워크형 구조(기본 동작 + 개별 커스터 마이징)에서 자주 사용됨.</p>
+            <p>핵심 규칙</p>
+            <p>부모에서 virtual(또는 abstract)로 열어야 자식에서 override 가능</p>
+            <p>일반 메서드는 그대로 오버라이딩 할 수 없음.</p>
+            <p>오버라이딩 시 함수 시크니처가 같아야함.</p>
+            <p>함수명, 매개변수,반환형이 일치해야 함.</p>
+            <p>접근 제한자는 부모와 호환되어야 함.</p>
+            <p>보통 부모의 의도를 유지하는 범위에서 재정의 함.</p>
+            <p>호출 기준은 실체 객체 타입에 따라 결정됨.</p>
+            <p>참조 변수가 부모 타입이어도, 실제 인스턴스가 자식이면 자식의 오버라이드 함수가 실행됨.</p>
+            <p>기본 동작 유지가 필요하면 부모 구현을 함께 호출</p>
+            <p>완전 교체가 아니라 기본처리 + 추가처리 구조가 필요 할 수 있음.</p>
+            <p>오버라이딩 대상이 없다면 override 사용 불가</p>
+            <p>부모에 같은 시그니처의 virtual/abstract/override 메서가 있어야함.</p>
+            <p>Unity 생명 주기 함수와 혼동 주의</p>
+            <p>Update, Start 같은 Unity 메시지는 일반적인 가상함수 오버라이딩 규칙과 별개로 동작하는 		부분이 있어 설계 의도를 구분해야 함.</p>
+            <p>구성 요소</p>
+            <p>Base Class(부모 클래스): 공통 필드/기능/기본 동작을 제공하는 상위 클래스</p>
+            <p>Derived Class(자식 클래스): 부모를 상속받아 기능을 확장하거나 재정의 하는 클래스</p>
+            <p>virtual:  부모 메서드를 자식이 재정의 할 수 있도록 허용하는 키워드</p>
+            <p>override: 부모의 가상 메서드를 자식에서 재정의 할 때 사용하는 키워드</p>
+            <p>abstract 메서드: 부모에서 선언만 하고 구현은 강제하지 않으며, 자식이 반드시 구현해야하는 메서드</p>
+            <p>다형성(Polymorphsim): 같은 부모 타입 참조로 여러 자식 객체를 다루되, 실제 동작은 각 자식 구현이 실행되는 특성</p>
+            <p>시그니처(Signature): 메서드 이름 + 매개변수 구성(형식/개수)</p>
+            <p>기본 구현(Default Implementation): 부모가 제공하는 기본 동작</p>
+            <p>대표 함수</p>
+            <p>abstract 메서드: 자식이 반드시 구현해야 하는 &quot;강제 규약을&quot; 만들 때 사용</p>
+            <p>sealed override: 한 번 오버라이드한 메서드를 더 아래 자식에서 다시 오버라이드 하지 못하게 막음</p>
+            <p>new 메서드 숨김: 오버라이드가 아니라 같은 이름으로 부모 메서드를 가리는 방식임.</p>
+            <p>인터페이스 구현 메서드: 상속이 아닌 계약 기반으로 동일한 메서드 형태를 구현</p>
+            <p>주의 사항</p>
+            <p>오버라이딩과 메서드 숨김(new)을 혼동 하지 말아야 함.</p>
+            <p>둘다 &quot;같은 이름&quot;처럼 보일 수 있지만, 다형성 동작이 달라짐.</p>
+            <p>부모 메서드에 virtual이 없으면 재정의가 아니라 숨김이 될 가능성이 큼.</p>
+            <p>의도하지 않은 동작 분기로 이어질 수 있음.</p>
+            <p>시그니처가 조금이라도 다르면 오버라이딩이 성립하지 않습니다.</p>
+            <p>매개변수 하나 차이로 전혀 다른 메서드가 될 수 있음.</p>
+            <p>부모의 기본 처리가 중요한 구조라면 완전 덮어쓰기 시 부작용이 생길 수 있음.</p>
+            <p>초기화, 상태 갱신, 이벤트 연결 등 공통 로직 누락에 주의해야 함.</p>
+            <p>오버라이딩을 많이 사용할수록 클래스 책임이 흐려질 수 있음.</p>
+            <p>무엇을 부모가 담당하고, 무엇을 자식이 바꾸는지 기준을 먼저 정리하는 것이 좋음.</p>
+            <p>성능보다 가독성과 설계 명확성이 우선이 경우가 많지만, 과도한 계층 구조는 유지보수를 어렵게 만들 수 있음.</p>
+            <p>3D RPG</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vector3.Lerp / Quaternion.Lerp | 이성호</title>
+    <meta name="description" content="Vector3.Lerp / Quaternion.Lerp">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="../resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="../cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="../portfolio.html">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="../blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="#more">More</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <article class="post-article">
+        <a class="back-link" href="../blog.html">블로그로 돌아가기</a>
+        <p class="blog-meta">2D AppleStory · 5월 31일 · 2분 분량</p>
+        <h1>Vector3.Lerp / Quaternion.Lerp</h1>
+        <img class="post-image" src="https://static.wixstatic.com/media/fa00d9_d3a29742354b4176b7ff406c47a86b74~mv2.png/v1/fill/w_632,h_1061,al_c,q_90,enc_avif,quality_auto/fa00d9_d3a29742354b4176b7ff406c47a86b74~mv2.png" alt="Vector3.Lerp / Quaternion.Lerp">
+        <div class="post-content">
+            <p>정의</p>
+            <p>Vector3.Lerp와 Quaternion.Lerp는 두 값 사이를 시간에 따라 부드럽게 보간(Interpolation)하기 위한 함수임.</p>
+            <p>Vector3.Lerp는 위치(Position) 이동에 사용되며, Quaternion.Lerp는 회전(Rotation) 보간에 사용됨.</p>
+            <p>즉시 값을 변경하는 방식이 아니라 시작 값(Start)에서 목표 값(Target)까지 점진적으로 변화시키는 방식이므로, 자연스러운 이동·회전 연출 구현에 자주 사용됨.</p>
+            <p>주로 카메라 이동, 피격 연출, 사망 애니메이션, UI 이동, 회전 전환 등에 활용됨.</p>
+            <p>핵심 규칙</p>
+            <p>Lerp는 시작 값과 목표 값 사이를 비율(t) 기반으로 계산함.</p>
+            <p>t 값이 0이면 시작 값, 1이면 목표 값이 반환되며, 0~1 사이 값일 경우 중간 지점을 반환함.</p>
+            <p>Lerp는 시간 기반 계산과 함께 사용하는 경우가 많음.</p>
+            <p>보통 elapsed / duration 형태로 진행 비율을 계산하여 시간에 따라 부드럽게 변화시키는 방식으로 사용됨.</p>
+            <p>Quaternion.Lerp는 회전 전용 보간 함수임.</p>
+            <p>회전값은 Euler 값이 아닌 Quaternion 기반으로 처리하는 것이 안정적이며, 회전 보간 시 Quaternion.Lerp를 사용하는 것이 일반적임.</p>
+            <p>Lerp는 매 프레임 반복 호출되어야 자연스럽게 동작함.</p>
+            <p>1회 호출만으로는 점진적인 변화가 발생하지 않으므로, Coroutine이나 Update 내부에서 반복적으로 실행해야 함.</p>
+            <p>보간 종료 후 최종 값을 명확히 고정하는 것이 안정적임.</p>
+            <p>반복 계산 과정에서 미세한 오차가 발생할 수 있으므로, 종료 시 최종 위치/회전을 목표 값으로 고정하는 방식이 자주 사용됨.</p>
+            <p>구성 요소</p>
+            <p>Start Value</p>
+            <p>보간 시작 시점의 값임.</p>
+            <p>Target Value</p>
+            <p>최종적으로 도달할 목표 값임.</p>
+            <p>Interpolation Value (t)</p>
+            <p>0~1 사이의 진행 비율 값으로, 현재 보간 위치를 결정하는 핵심 요소임.</p>
+            <p>Vector3.Lerp</p>
+            <p>위치(Vector3) 값을 부드럽게 보간하는 함수임.</p>
+            <p>Quaternion.Lerp</p>
+            <p>회전(Quaternion) 값을 부드럽게 보간하는 함수임.</p>
+            <p>Duration</p>
+            <p>보간이 진행되는 전체 시간 값임.</p>
+            <p>유사함수</p>
+            <p>Vector3.MoveTowards</p>
+            <p>목표 지점까지 일정 속도로 이동시키는 함수임.</p>
+            <p>Quaternion.RotateTowards</p>
+            <p>목표 회전까지 일정 각도로 회전시키는 함수임.</p>
+            <p>Mathf.Lerp</p>
+            <p>float 값 사이를 보간하는 함수임.</p>
+            <p>Vector3.SmoothDamp</p>
+            <p>가속/감속 기반으로 더 부드러운 이동을 구현하는 함수임.</p>
+            <p>Quaternion.Slerp</p>
+            <p>구면 보간(Spherical Interpolation) 방식으로 회전을 자연스럽게 처리하는 함수임.</p>
+            <p>주의사항</p>
+            <p>t 값이 0~1 범위를 벗어나면 예상과 다른 결과가 발생할 수 있음.</p>
+            <p>진행 비율 계산 시 duration이 0이 되지 않도록 관리해야 함.</p>
+            <p>Lerp를 단순 반복 호출하면 목표 값에 완전히 도달하지 못할 수 있음.</p>
+            <p>매 프레임 현재 값을 다시 시작 값으로 사용하면 감속 형태로 동작할 수 있음.</p>
+            <p>Quaternion은 Euler 회전값과 개념이 다름.</p>
+            <p>Quaternion.Lerp는 내부적으로 Quaternion 기반 계산을 수행하므로, Euler 값처럼 직접 다루면 회전 방향 문제가 발생할 수 있음.</p>
+            <p>보간 중 원본 값이 계속 변경되면 움직임이 불안정해질 수 있음.</p>
+            <p>시작 값과 목표 값은 보간 시작 시점 기준으로 고정하는 구조가 안정적임.</p>
+            <p>과도한 Lerp 사용은 움직임 반응 속도를 둔하게 만들 수 있음.</p>
+            <p>즉각적인 반응이 필요한 입력 처리나 전투 로직에서는 지나친 보간 사용이 오히려 조작감을 저하시킬 수 있음.</p>
+            <p>2D AppleStory</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Physics2D | 이성호</title>
+    <meta name="description" content="Physics2D">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="../resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="../cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="../portfolio.html">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="../blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="#more">More</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <article class="post-article">
+        <a class="back-link" href="../blog.html">블로그로 돌아가기</a>
+        <p class="blog-meta">2D AppleStory · 3월 17일 · 2분 분량</p>
+        <h1>Physics2D</h1>
+        <img class="post-image" src="https://static.wixstatic.com/media/fa00d9_27fe2ec4b2cc48758b71429d359c246f~mv2.png/v1/fill/w_740,h_673,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/fa00d9_27fe2ec4b2cc48758b71429d359c246f~mv2.png" alt="Physics2D">
+        <div class="post-content">
+            <p>정의</p>
+            <p>Physics2D는 Unity에서 2D 오브젝트의 충돌, 감지, 이동 판정을 처리하는 물리 시스템임.</p>
+            <p>주로 RayCast, overlapbox, Rigidbody2D, Collider2D, IgnoreCollision 등을 이용해 바닥체크, 사다리 감지, 충돌 처림, 일시적 통과 처리 등을 구현함.</p>
+            <p>핵심 규칙</p>
+            <p>감지 와 이동 처리는 분리해야함.</p>
+            <p>Raycast, OverlapBox는 상태 확인용이고, Rigidbody2D.velocity나 gravityScale은 실제 이동 처리용임.</p>
+            <p>검사 방식은 목적에 맞게 나눠야 함.</p>
+            <p>바닥 확인은 Raycast, 특정 구역 감지는 Overlap 계열이 더 적합한 경우가 많음.</p>
+            <p>충돌 수시는 필요한 순간에만 적용해야함.</p>
+            <p>계속 무시하면 관통 문제가 생길 수 있으므로, 조건부로 잠깐만 해제하는 방식이 안전함.</p>
+            <p>IgnoreCollision은 콜라이더끼리만 적용됨.</p>
+            <p>레이어 전체가 아니라 두 Collider2D 사이의 충돌 관계만 바꾸는 방식임.</p>
+            <p>충돌 무시 후 복구 처리가 반드시 있어야 함.</p>
+            <p>무시만 하고 다시 켜지 않으면 이후 물리 동작이 꼬일 수 있음.</p>
+            <p>위치 판단은 bounds 기준으로 보는 것이 안정적임.</p>
+            <p>특히 발 위치, 머리 위치, 사다리 꼭대기 판정은 transform보다 collider bonuds기준이 더 정확한 경우가 많음.</p>
+            <p>구성 요소</p>
+            <p>Physics2D</p>
+            <p>Unity의 2D 물리 검사 기능을 담당하는 클래스</p>
+            <p>Rigidbody2D</p>
+            <p>2D 오브젝트의 이동, 속도, 중력 반응을 담당함.</p>
+            <p>Collider2D</p>
+            <p>2D 충돌 판정 영역임.</p>
+            <p>OverlapBox</p>
+            <p>박스 범위 안에 들어온 콜라이더를 감지하는 방식임.</p>
+            <p>LayerMask</p>
+            <p>검사할 레이어를 제한하는 필터 임.</p>
+            <p>bounds</p>
+            <p>콜라이더가 차지하는 실제 월드 공간 범위</p>
+            <p>IgnoreCollision</p>
+            <p>특정 두 콜라이더 사이의 충돌을 끄거나 다시 켜는 기능임.</p>
+            <p>IgnoreCollisionTemporarily</p>
+            <p>일정 시간 동안만 충돌을 무시하고 다시 복구하는 처리 방식임.</p>
+            <p>유사함수</p>
+            <p>Physics2D.Raycast</p>
+            <p>바닥, 벽, 전방 장애물 등을 선형으로 검사할 때 사용함.</p>
+            <p>Physics2D.OverlapBox</p>
+            <p>박스 범위 안에서 사다리나 특정구역 충돌체를 감지 할 떄 사용 함.</p>
+            <p>Physics2D.OverlapCircle</p>
+            <p>원형 범위 안의 충돌체를 간단하게 검사할 때 사용함.</p>
+            <p>physics2D.IgnoreCollision</p>
+            <p>특정 두 Collider2D 사이의 충돌을 직접 켜고 끌 때 사용 함.</p>
+            <p>physics2D.IgnoreLayerCollision</p>
+            <p>개별 콜라이더가 아니라 레이어 단위로 충돌 여부를 제어 할 때 사용함.</p>
+            <p>주의사항</p>
+            <p>Rigidbody2D와 Collider2D 역할이 섞이면 물리 흐름이 불안정해질 수 있음.</p>
+            <p>OverlapBox 크기나 위치가 조금만 어긋나도 감지 결과가 달라 질 수 있음.</p>
+            <p>IgnoreCollision은 대상 콜라이더가 정확해야 원하느 충돌만 무시 할 수 있음.</p>
+            <p>충돌 무시 시간이 너무 짧으면 다시 걸리고, 너무 길면 원치 않는 관통이 생길 수 있음.</p>
+            <p>IgnoreCollisionTemporarily 같은 방식은 특히 위에서 아래로 내려갈 떄 상단 발판에 걸리지 않게 만든느처리에서 중요함.</p>
+            <p>bounds 기준 계산 없이 Transform 위치만 믿으면 발 위치나 꼭대기 판정이 어긋날 수 있음.</p>
+            <p>2D AppleStory</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>

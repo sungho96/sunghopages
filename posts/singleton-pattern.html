@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Singleton Pattern | 이성호</title>
+    <meta name="description" content="Singleton Pattern">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="../resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="../cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="../portfolio.html">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="../blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="#more">More</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <article class="post-article">
+        <a class="back-link" href="../blog.html">블로그로 돌아가기</a>
+        <p class="blog-meta">3D RPG · 3월 4일 · 2분 분량</p>
+        <h1>Singleton Pattern</h1>
+        <img class="post-image" src="https://static.wixstatic.com/media/fa00d9_cd737397580a4bd98e1f14c6ed584ee3~mv2.png/v1/fill/w_710,h_829,al_c,q_90,enc_avif,quality_auto/fa00d9_cd737397580a4bd98e1f14c6ed584ee3~mv2.png" alt="Singleton Pattern">
+        <div class="post-content">
+            <p>정의</p>
+            <p>singletone Pattern은 게임 전역에서 공통으로 쓰는 기능을  하나의 인스턴스만 유지하고, 어디서든 동일한 창구로 접근할 수 있게 만드는 설게 방식 유니티에서는 보통 전역 매니저 오브젝트를 한 번만 생성하고, 씬이 바뀌어도 유지되도록 구성</p>
+            <p>핵심 규칙</p>
+            <p>인스턴스는 하나만 존재해야 함.</p>
+            <p>중복 생성이 되면 상태가 갈리고, 같은 동작이  두 번씩 실행되는 문제가 생김.</p>
+            <p>초기화 시점을 고정해야 함.</p>
+            <p>언제만들어지고 언제 준비가 끝나는지가 흔들리면 접근하는 쪽에서 Null/미완성 상태를 만나기 쉬움.</p>
+            <p>씬 전환에도 유지되는 전역 오브젝트는 생명주기를 명확히 관리 해야 함.</p>
+            <p>씬이 바뀌어도 남는 대신, 정리 해야 할 것(이벤트, 캐시,임시 데이터)은 분리해서 관리 해야 함.</p>
+            <p>Singleton은 접근 통로를 단순화하지만, 무분별하게 늘리면 결합도가 급격히 올라감.</p>
+            <p>테스트/확장/디버깅이 어려워 짐.</p>
+            <p>이벤트를 연결하는 singleton은 중복 구독과 해제를 반드시 통제 해야함.</p>
+            <p>전역이라서 한 번 꼬이면 영향 범위가 매우 커짐.</p>
+            <p>구성 요소</p>
+            <p>Instance: 전역에서 공유되는 유일한 객체 참조.</p>
+            <p>Lazy Initialization(지연 생성): 처음 필요할 때 생성/초기화하는 방식(장점: 가벼움, 단점 : 타이밍 이슈)</p>
+            <p>Eager Initialization(즉시 생성): 시작 시점에 미리 생성/초기화 하는 방식(장점: 안정적, 단점: 초기 로딩 비용)</p>
+            <p>Persistent Object: 씬이이 바뀌어도 파괴되지 않고 유지되는 전역 오브젝트.</p>
+            <p>Manger Pattern: 기능별 관리 클래스를 묶어 전역 서비스처럼 제공하는 구조.</p>
+            <p>Global Access: 어디서든 접근 가능한 정적 프로퍼터/전역 참조를 통한 호출 방식.</p>
+            <p>유사함수</p>
+            <p>DontDestoryOnLoad(): 씬 전환 시 오브젝트가 파괴되지 않도록 유지 함.</p>
+            <p>FindObjectOfType(): 씬에서 특정 타입 인스턴스를 탐색해 이미 존재하는 싱글턴을 찾는 데 쓰임.</p>
+            <p>GameObject.Find(): 이름 기반 탐색으로 전역 루트 오브젝트 확인에 사용되지만 비용/안정성 이슈가 있어 주의가 필요함.</p>
+            <p>Awake(): 싱글턴 인스턴스 중복 체크 및 초기화 타이밍을 잡는데 많이 사용 됨.</p>
+            <p>OnDestory(): 씬 종료/종료 상황에서 참조 해제나 정리 로직을 넣는 데 사용 됨.</p>
+            <p>주의사항</p>
+            <p>중복 생성 방지가 가장 중요함.</p>
+            <p>씬에 같은 매니저 프리팹이 또 올라가거나, 시작 로직이 두 번 돌면 인스턴스 2개가 쉽게 생김.</p>
+            <p>전역 상태를 너무 많이 담으면 디버깅이 어려워짐.</p>
+            <p>어디서 값을 바꿨는지 추적이 힘들어지고, 버그가 랜덤하게 보이기 쉬움.</p>
+            <p>이벤트 구독이 누적되면 실행이 중복됨.</p>
+            <p>전역 객체는 오래 살아남기 때문에, 구독/해제가 누락되면 시간이 지날수록 증상이 심해짐.</p>
+            <p>초기화 순서 문제에 취약함.</p>
+            <p>어떤 매니저가 다른 매니저를 먼저 필요로 할 때, 준비되기 전에 접근하면 Null 또는 초기값 문제로 이어질 수 있음.</p>
+            <p>테스트/확장이 어려워 질 수 있음.</p>
+            <p>전역 접근은 편하지만, 나중에 대체 구현이나 기능 분리를 하기가 까다로워 질 수 있음.</p>
+            <p>3D RPG</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>

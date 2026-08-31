@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TextInputfiled | 이성호</title>
+    <meta name="description" content="TextInputfiled">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="../resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="../cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="../portfolio.html">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="../blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="#more">More</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <article class="post-article">
+        <a class="back-link" href="../blog.html">블로그로 돌아가기</a>
+        <p class="blog-meta">3D RPG · 2월 11일 · 1분 분량</p>
+        <h1>TextInputfiled</h1>
+        <img class="post-image" src="https://static.wixstatic.com/media/fa00d9_6746fa43671a41caa46de65689a72775~mv2.png/v1/fill/w_740,h_754,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/fa00d9_6746fa43671a41caa46de65689a72775~mv2.png" alt="TextInputfiled">
+        <div class="post-content">
+            <p>최종 수정일: 2월 19일</p>
+            <p>정의</p>
+            <p>TextUnputfiled는 사용자가 키보드/모바일 키패드로 문자열을 입력할 수 있게 하는 UI 입력 컴포넌트(일반적으로 InputField 또는 TextMeshpro의 TMP_InputField를 의미)</p>
+            <p>입력 값은 텍스트로 저장되면, 포커스/선택영역/플레이스홀더 등이 동작함.</p>
+            <p>핵심 규칙</p>
+            <p>입력 UI는 포커스를 가져야 타이핑이 들어감.(선택/활성화 상태 관리가 중요)</p>
+            <p>입력 타입(일반/비밀번호/숫자 등)은 Content Type 같은 설정으로 제한함.</p>
+            <p>값 읽기는 보통 현재 문자열(text) 기준이며, 입력 완료/값 변경 시점을 구분함.(변경 중 vs 제출/완료) 사용자 경험을 위해 초기 포커스, 엔터 키 제출,탭 이동,실패시 포커스 복귀 같은 흐름을 미리 설계함.</p>
+            <p>모바일에서는 키보드가 뜨는 타이밍/종류가 중요하므로 입력 제한과 키보드 타입을 함께 고려함.</p>
+            <p>구성요소(용어 정리)</p>
+            <p>TextArea:사용자가 실제로 입력/표시되는 텍스트 영역</p>
+            <p>PlaceHolder: 비어있을때 안내문구</p>
+            <p>Caret(커서): 현재 입력 위치를 표시하는 깜빡이는막대</p>
+            <p>Selection(선택영역): 드래그/Shift로 선택된 범위 표시</p>
+            <p>Content Type: 입력 형식 제한(pw, integer, Decimal 등)</p>
+            <p>Character Validation: 허용 문자 규칙(숫자만, 이메일 형식 등)</p>
+            <p>Line Type: 한 줄/여러 줄 입력</p>
+            <p>Submit/End edit: 입력완료(엔터/포커스 해제 등)시점 이벤트 개념</p>
+            <p>Focus/Activate: 입력을 받아 준비가 된 활성 상태(키 입력이 들어오는 상태)</p>
+            <p>유사함수</p>
+            <p>Select() : 해당 입력칸을 선택 상태로 만들어 포커스 준비를 함.</p>
+            <p>.</p>
+            <p>ActivateInputField() : 실제로 키 입력을 받도록 입력 상태를 활성화 함.</p>
+            <p>DeactivateInputField(): 입력 상태를 종료하고 포커스를 해제 함.</p>
+            <p>ForceLabelUpdate(): 설정 변경 후 표시 텍스트를즉시 갱신 함.</p>
+            <p>MoveTextEnd(bool Shift): 커서를 텍스트 끝으로 이동(shif로 선택 확장 가능)함.</p>
+            <p>주의 사항</p>
+            <p>오탑/타입 혼동: TextInputfiled처럼 이름이 섞이면 컴포넌트/타입 연결이 끊기기 쉬움</p>
+            <p>. InputField 철자를 먼저 확정.</p>
+            <p>비밀번호 마스킹은 설정만으로 끝나지 않을 수 있음: Content Type= Password로 바꾼 뒤 표시 갱신이 필요할 때가 있음.</p>
+            <p>포커스 제어를 안하면 UX가 급격히 나빠짐 : 실패 메시지 닫은 뒤 입력칸으로 다시 돌아오지 않으면 사용자가 매번클릭해야 함.</p>
+            <p>값 검증 타이밍: OnvalueChaged에서 검증하면 과하게 방해 될 수 있고, OnEndEdit/제출 시점에서 검증하면 자연 스러움.</p>
+            <p>EventSystem/입력 모듈 영향: 입력이  안들어오면(커서가 안뜸) 대부분 포커스/이벤트 쪽 문제일 확률이 높음.</p>
+            <p>3D RPG</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>
