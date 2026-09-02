@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>포트폴리오 | 이성호</title>
+    <meta name="description" content="Apple Story Goblin Raid 프로젝트 포트폴리오">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html">이성호</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="resume.html">이력서</a>
+        <span aria-hidden="true"></span>
+        <a href="cover-letter.html">자기소개서</a>
+        <span aria-hidden="true"></span>
+        <a href="portfolio.html" aria-current="page">포트폴리오</a>
+        <span aria-hidden="true"></span>
+        <a href="blog.html">블로그</a>
+        <span aria-hidden="true"></span>
+        <a href="contact.html">More</a>
+      </nav>
+    </header>
+
+    <main class="portfolio-page">
+      <div class="project-back-wrap">
+        <a class="back-link project-back-link" href="portfolio.html">&larr; Projects</a>
+      </div>
+      <section class="portfolio-hero">
+        <img
+          src="https://static.wixstatic.com/media/fa00d9_8fca785c0950412faef651501c03d617~mv2.png/v1/fill/w_1581,h_273,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/fa00d9_8fca785c0950412faef651501c03d617~mv2.png"
+          alt="Apple Story Goblin Raid 배너"
+        >
+      </section>
+
+      <section class="project-overview">
+        <div class="video-frame">
+          <iframe
+            src="https://www.youtube.com/embed/6A1pH7p6nBg"
+            title="Apple Story Goblin Raid gameplay"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="overview-copy">
+          <p class="eyebrow">2D Multiplayer Portfolio</p>
+          <h1>Apple Story<br>Goblin Raid</h1>
+          <p class="tech-stack">Unity · C# · Netcode for GameObjects</p>
+          <p>
+            캐릭터를 선택하고 스킬과 키를 설정한 뒤,<br>
+            2명의 플레이어가 협력해 고블린 보스를 공략하는 2D 멀티플레이 게임입니다.
+          </p>
+          <div class="github-icon-wrap">
+            <a
+              class="github-icon-link"
+              href="https://github.com/sungho96/AppleStory2D"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="AppleStory GitHub 저장소 열기"
+            >
+              <img src="assets/github-icon.png" alt="GitHub">
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="portfolio-gallery" aria-label="프로젝트 이미지">
+        <img
+          class="small-badge"
+          src="https://static.wixstatic.com/media/fa00d9_1df661721c42428c9d9ddce3ed3c15a2~mv2.png/v1/fill/w_186,h_98,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/fa00d9_1df661721c42428c9d9ddce3ed3c15a2~mv2.png"
+          alt="프로젝트 보조 이미지"
+        >
+        <article class="portfolio-image-section">
+          <img
+            src="https://static.wixstatic.com/media/fa00d9_ea0261dabc864032b3c13e3b09efda17~mv2.png/v1/fill/w_960,h_1200,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/fa00d9_ea0261dabc864032b3c13e3b09efda17~mv2.png"
+            alt="Apple Story 플레이 화면"
+          >
+        </article>
+        <article class="portfolio-image-section">
+          <img
+            src="https://static.wixstatic.com/media/fa00d9_6732a41b0e0f4d08b98aef6766525eb8~mv2.png/v1/fill/w_1200,h_900,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/ChatGPT%20Image%202026%EB%85%84%208%EC%9B%94%2026%EC%9D%BC%20%EC%98%A4%EC%A0%84%2011_37_35.png"
+            alt="Apple Story 프로젝트 이미지"
+          >
+        </article>
+      </section>
+
+      <section class="case-studies">
+        <div class="case-heading">
+          <p>CASE STUDIES</p>
+          <h1>프로젝트를 진행하며 발생한 문제와 이를 해결하기 위해 적용한 개선 사례입니다.</h1>
+        </div>
+
+        <article class="case-card">
+          <h2>보스 네트워크 인스턴스 불일치</h2>
+          <div class="case-row problem">
+            <h3>문제</h3>
+            <div class="case-copy">
+            <p>보스전에서 Host와 Client 화면의 보스 위치와 행동 타이밍이 서로 다르게 보였습니다.</p>
+            <p>Host에서는 보스가 이미 이동하거나 스킬을 사용하고 있었지만,<br>Client에서는 다른 위치에 있거나 스킬 이펙트와 공격 타이밍이 늦게 보이는 문제가 발생했습니다.<br>처음에는 단순 네트워크 지연 문제로 의심했습니다.</p>
+            </div>
+          </div>
+          <div class="case-row cause">
+            <h3>원인</h3>
+            <div class="case-copy">
+            <p>디버그 로그로 보스의 NetworkObject 상태를 확인한 결과,<br>Host와 Client가 같은 보스 인스턴스를 공유하지 않고<br>각자 다른 보스 오브젝트를 기준으로 동작하고 있는 것을 확인했습니다.</p>
+            <p>기존 보스 오브젝트가 네트워크 Spawn 대상으로 제대로 관리되지 않아,<br>Host와 Client에서 보스 AI, 위치, 스킬 실행이 서로 다른 기준으로 처리되고 있었습니다.</p>
+            </div>
+          </div>
+          <div class="case-row solution">
+            <h3>해결</h3>
+            <div class="case-copy">
+            <p>실제 사용해야 하는 보스 프리팹을 NetworkObject 기반으로 정리하고,<br>보스가 씬에서 하나의 네트워크 인스턴스로 Spawn되도록 수정했습니다.</p>
+            <p>Client에서는 보스 AI를 직접 실행하지 않도록 막고,<br>Server가 보스 이동, 스킬 실행, 공격 판정을 담당하도록 구조를 정리했습니다.<br>이후 Client는 Server에서 전달받은 보스 위치와 상태를 기준으로 표시되도록 개선했습니다.</p>
+            </div>
+          </div>
+          <div class="case-row result">
+            <h3>결과</h3>
+            <div class="case-copy">
+            <p>Host와 Client가 서로 다른 보스를 기준으로 전투하던 문제가 해결되었고,<br>양쪽 화면에서 동일한 보스 위치와 행동을 기준으로 전투가 진행되도록 개선했습니다.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="case-card">
+          <h2>스킬 애니메이션 상태 충돌</h2>
+          <div class="case-row problem">
+            <h3>문제</h3>
+            <div class="case-copy">
+            <p>DownStrike와 ShieldBlock 스킬 사용 중 애니메이션이 끝까지 재생되지 않고, 중간에 Idle 또는 Run 상태로 전환되는 문제가 발생했습니다.</p>
+            </div>
+          </div>
+          <div class="case-row cause">
+            <h3>원인</h3>
+            <div class="case-copy">
+            <p>이동 컨트롤러가 매 프레임 캐릭터의 기본 애니메이션 상태를 갱신하고 있어, 스킬 시스템이 재생한 애니메이션과 Animator 제어권이 충돌하고 있었습니다.</p>
+            <p>즉, 이동 상태와 스킬 상태가 서로 독립적으로 Animator를 변경하는 구조가 원인이었습니다.</p>
+            </div>
+          </div>
+          <div class="case-row solution">
+            <h3>해결</h3>
+            <div class="case-copy">
+            <p>스킬 사용 여부를 별도의 상태로 관리하고, 스킬 실행 중에는 이동 컨트롤러의 기본 애니메이션 갱신을 제한했습니다.</p>
+            <p>또한 일부 스킬은 PlayableGraph를 이용해 AnimationClip을 직접 재생하도록 구성하여, 기존 Animator Controller를 크게 변경하지 않고 스킬 애니메이션을 안정적으로 제어했습니다.</p>
+            </div>
+          </div>
+          <div class="case-row result">
+            <h3>결과</h3>
+            <div class="case-copy">
+            <p>Idle/Run상태가 스킬 애니메이션을 중간에 덮어쓰는 현상을 해결했습니다.</p>
+            <p>DownStrike와 ShieldBlock의 애니메이션이 끝까지 안정적으로 재생되고, 스킬 종료 후 자연스럽게 기본 이동 상태로 복귀하도록 개선했습니다.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="case-card">
+          <h2>키 바인딩 데이터 수명 주기</h2>
+          <div class="case-row problem">
+            <h3>문제</h3>
+            <div class="case-copy">
+            <p>GameEntry에서 설정한 키 바인딩이 보스전까지는 유지되어야 했지만, 이전 Play나 Restart 이후의 설정까지 다음 게임에 남는 문제가 발생했습니다.</p>
+            <p>이 때문에 새로 게임을 시작했는데도 이전 스킬 배치가 남아 있거나, Ready 상태와 실제 키 설정이 서로 맞지 않는 상황이 생겼습니다.</p>
+            </div>
+          </div>
+          <div class="case-row cause">
+            <h3>원인</h3>
+            <div class="case-copy">
+            <p>키 바인딩 데이터를 PlayerPrefs에 저장하면서, 전투 준비 과정에서만 필요한 데이터를 영구 저장 데이터처럼 관리하고 있었습니다.</p>
+            <p>하지만 이 프로젝트의 키 설정은 사용자 옵션이 아니라 GameEntry → Ready → Boss Battle 동안만 유지되면 되는 세션 데이터였습니다.</p>
+            </div>
+          </div>
+          <div class="case-row solution">
+            <h3>해결</h3>
+            <div class="case-copy">
+            <p>영구 저장 방식인 PlayerPrefs를 제거하고, 현재 Play 세션 동안만 유지되는 static Dictionary를 사용하도록 구조를 변경했습니다.</p>
+            <p>또한 Archer와 Warrior의 바인딩 데이터를 분리하고, 새 Play 시작이나 Restart, GameEntry 재진입 시점에는 세션 데이터를 명시적으로 초기화하도록 처리했습니다.</p>
+            </div>
+          </div>
+          <div class="case-row result">
+            <h3>결과</h3>
+            <div class="case-copy">
+            <p>키 설정은 씬 전환 후 보스전까지 정상적으로 유지되면서도, 새로운 게임을 시작할 때는 이전 설정이 남지 않도록 개선했습니다.</p>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer" id="more">
+      <div class="footer-inner">
+        <section>
+          <h2>Phone</h2>
+          <p>010-5263-3509</p>
+        </section>
+        <section>
+          <h2>Email</h2>
+          <p><a href="mailto:zx028906@naver.com">zx028906@naver.com</a></p>
+        </section>
+        <section>
+          <h2>github</h2>
+          <p><a href="https://github.com/sungho96">https://github.com/sungho96</a></p>
+        </section>
+      </div>
+    </footer>
+  </body>
+</html>
