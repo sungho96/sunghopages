@@ -33,7 +33,6 @@
       </section>
 
       <section class="project-detail-section">
-        <h2>Game Video</h2>
         <div class="video-frame kata-video-frame">
           <iframe
             src="https://www.youtube.com/embed/kJBzNvbTS8s"
@@ -46,7 +45,6 @@
 
       <section class="project-overview kata-overview">
         <div class="overview-copy">
-          <h2 class="overview-section-title">Game Intro</h2>
           <p class="eyebrow">Single Player 3D RPG</p>
           <h1>KATA 3DRPG</h1>
           <p class="tech-stack">Unity · C# · 3D RPG</p>
@@ -58,12 +56,11 @@
           <div class="github-icon-wrap">
             <a
               class="github-icon-link"
-              href="#"
+              href="https://github.com/sungho96/3D_RPG"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="KATA 3DRPG GitHub 저장소 열기"
             >
-              <!-- GitHub URL 입력 위치: 위 href="#" 값을 KATA 3DRPG 저장소 주소로 교체 -->
               <img src="assets/github-icon.png" alt="GitHub">
             </a>
           </div>
@@ -91,33 +88,29 @@
           <div class="case-row problem">
             <h3>문제</h3>
             <div class="case-copy">
-              <p>클릭 이동 중 몬스터를 공격하거나,<br>기본 공격 중 Q/W/E/R 스킬을 사용하면<br>이동 상태와 공격 애니메이션이 서로 섞일 수 있었습니다.</p>
-              <p>특히 공격 판정은 애니메이션 이벤트에서 발생하고,<br>입력은 매 프레임 들어오기 때문에<br>상태 전환 타이밍을 정리할 필요가 있었습니다.</p>
+              <p>이동 중 공격하거나 기본 공격 중 스킬을 사용하면<br>이전 행동이 끝나기 전에 새로운 입력이 들어와<br>이동과 공격 애니메이션이 겹치는 문제가 있었습니다.</p>
             </div>
           </div>
           <div class="case-row cause">
             <h3>원인</h3>
             <div class="case-copy">
-              <p>플레이어 조작이<br>OnMouseEvent,<br>OnKeyboard,<br>UpdateMoving,<br>UpdateSkill,<br>OnHitEvent,<br>OnSkillEndEvent 등<br>여러 지점에서 처리되고 있었습니다.</p>
-              <p>단순히 입력이 들어올 때마다 애니메이션을 재생하면<br>기본 공격 루프와 스킬 시전,<br>이동 복귀가 충돌할 수 있는 구조였습니다.</p>
+              <p>이동과 공격 입력은 계속 확인되지만,<br>실제 공격은 애니메이션이 진행되는 동안 처리됩니다.</p>
+              <p>현재 공격이 끝났는지 확인하지 않고 새로운 입력을 받으면<br>기존 행동이 중간에 끊기거나<br>다른 애니메이션으로 덮어써질 수 있었습니다.</p>
             </div>
           </div>
           <div class="case-row solution">
             <h3>해결</h3>
             <div class="case-copy">
-              <p>_castingskill,<br>_skillStarted,<br>_stopSkill,<br>_currentSkillHash</p>
-              <p>등의 플래그를 사용해<br>현재 전투 상태를 구분했습니다.</p>
-              <p>스킬 시전 중에는 이동/기본 공격 입력을 막고,</p>
-              <p>기본 공격은 OnHitEvent,</p>
-              <p>스킬은 OnSkillHitEvent와 OnSkillEndEvent에서</p>
-              <p>타격과 종료를 처리하도록 분리했습니다.</p>
+              <p>_castingSkill과 _currentSkillHash를 사용해<br>현재 스킬 사용 상태를 확인하고,</p>
+              <p>스킬이 진행 중일 때는<br>이동과 기본 공격 입력을 제한했습니다.</p>
+              <p>공격 판정은 OnSkillHitEvent,<br>스킬 종료는 OnSkillEndEvent에서 처리해<br>입력 시점과 실제 공격 시점을 분리했습니다.</p>
             </div>
           </div>
           <div class="case-row result">
             <h3>결과</h3>
             <div class="case-copy">
-              <p>이동, 기본 공격, 스킬 사용이<br>같은 Skill 상태 안에서도 서로 덮어쓰지 않도록 정리되었고,</p>
-              <p>애니메이션 타이밍에 맞춰<br>데미지를 적용할 수 있었습니다.</p>
+              <p>공격이나 스킬이 진행되는 동안<br>다른 입력이 끼어드는 문제를 막았고,</p>
+              <p>애니메이션 타이밍에 맞춰 공격 판정과 데미지가<br>정상적으로 적용되도록 정리했습니다.</p>
             </div>
           </div>
         </article>
@@ -127,37 +120,28 @@
           <div class="case-row problem">
             <h3>문제</h3>
             <div class="case-copy">
-              <p>몬스터를 일정 수 유지하려면<br>사망한 몬스터 수,<br>현재 살아있는 몬스터 수,<br>곧 생성될 예정인 몬스터 수를<br>함께 관리해야 했습니다.</p>
-              <p>그렇지 않으면 몬스터가 한꺼번에 과도하게 생성되거나,<br>반대로 부족하게 유지될 수 있었습니다.</p>
+              <p>몬스터가 죽은 뒤 다시 생성될 때,<br>아직 생성 중인 몬스터를 확인하지 못해<br>같은 몬스터를 여러 번 생성 요청하는 문제가 있었습니다.</p>
             </div>
           </div>
           <div class="case-row cause">
             <h3>원인</h3>
             <div class="case-copy">
-              <p>스폰은 코루틴으로 지연 실행되고,<br>몬스터 제거는 전투 결과로 즉시 발생합니다.</p>
-              <p>즉,</p>
-              <p>"이미 생성된 몬스터"</p>
-              <p>와</p>
-              <p>"생성 예약 중인 몬스터"</p>
-              <p>를 따로 관리하지 않으면</p>
-              <p>Update에서 매 프레임<br>중복 스폰 코루틴이 시작될 수 있는 구조였습니다.</p>
+              <p>몬스터는 생성 요청 후 바로 나타나는 것이 아니라<br>코루틴을 통해 일정 시간이 지난 뒤 생성됩니다.</p>
+              <p>이 때문에 실제 몬스터 수만 확인하면<br>이미 생성이 예약된 몬스터를<br>다시 부족한 수로 판단할 수 있었습니다.</p>
             </div>
           </div>
           <div class="case-row solution">
             <h3>해결</h3>
             <div class="case-copy">
-              <p>SpawningPool에서</p>
-              <p>_monsterCount<br>_reserveCount</p>
-              <p>를 분리했습니다.</p>
-              <p>현재 몬스터 수와 예약 수를 합쳐<br>목표 수보다 적을 때만 ReserveSpawn을 실행하고,</p>
-              <p>GameManager.Spawn / Despawn의<br>OnSpawnEvent를 통해<br>몬스터 수 변화를 반영했습니다.</p>
+              <p>_monsterCount로 현재 존재하는 몬스터 수를 관리하고,<br>_reserveCount로 생성 대기 중인 몬스터 수를<br>따로 관리했습니다.</p>
+              <p>두 값을 합쳐 목표 몬스터 수와 비교하고,<br>실제로 부족한 경우에만 ReserveSpawn을 실행하도록 수정했습니다.</p>
             </div>
           </div>
           <div class="case-row result">
             <h3>결과</h3>
             <div class="case-copy">
-              <p>Game Scene에서 목표 몬스터 수를<br>안정적으로 유지할 수 있었고,</p>
-              <p>스폰 대기 중인 몬스터까지 고려해<br>중복 생성 가능성을 줄였습니다.</p>
+              <p>생성 예정인 몬스터까지 수량에 포함하면서<br>중복 생성 요청을 막았고,</p>
+              <p>항상 설정한 목표 수에 맞게<br>몬스터가 유지되도록 했습니다.</p>
             </div>
           </div>
         </article>
@@ -167,38 +151,30 @@
           <div class="case-row problem">
             <h3>문제</h3>
             <div class="case-copy">
-              <p>전투 중 HP가 줄거나<br>몬스터 처치로 EXP가 증가하고<br>레벨업이 발생할 때,</p>
-              <p>HUD가 항상 최신 값을 표시해야 했습니다.</p>
-              <p>값이 바뀌는 곳마다 UI를 직접 갱신하면<br>누락되거나 중복 호출될 수 있었습니다.</p>
+              <p>전투 중 HP 감소, 경험치 획득, 레벨업처럼<br>여러 상황에서 스탯이 변경되기 때문에</p>
+              <p>HUD가 항상 최신 값을 표시하도록<br>관리할 필요가 있었습니다.</p>
             </div>
           </div>
           <div class="case-row cause">
             <h3>원인</h3>
             <div class="case-copy">
-              <p>HP 감소는 Stat.OnAttacked,</p>
-              <p>EXP 증가는 Stat.OnDead,</p>
-              <p>레벨업은 PlayerStats.Exp</p>
-              <p>에서 발생합니다.</p>
-              <p>데이터 변경 지점이 여러 곳이기 때문에<br>HUD가 각각의 흐름을 모두 직접 알고 있으면<br>의존성이 커지는 구조였습니다.</p>
+              <p>스탯이 변경되는 위치마다 HUD를 직접 갱신하면<br>새로운 기능이 추가될 때 UI 갱신 코드를 빠뜨리거나</p>
+              <p>같은 갱신을 여러 곳에서<br>호출할 수 있었습니다.</p>
             </div>
           </div>
           <div class="case-row solution">
             <h3>해결</h3>
             <div class="case-copy">
-              <p>Stat에 OnChanged 이벤트를 두고,</p>
-              <p>HP,<br>MaxHP,<br>공격력,<br>방어력,<br>이동속도 등</p>
-              <p>주요 값이 변경될 때<br>알림을 보내도록 했습니다.</p>
-              <p>UI_HUD는 PlayerStats.OnChanged를 구독하고,</p>
-              <p>RefreshHUD에서</p>
-              <p>HP,<br>MP,<br>EXP 게이지와 텍스트를</p>
-              <p>한 번에 갱신하도록 구성했습니다.</p>
+              <p>Stat.OnChanged 이벤트를 통해<br>스탯이 변경되었음을 알리고,</p>
+              <p>UI_HUD가 해당 이벤트를 구독하도록 구성했습니다.</p>
+              <p>실제 HP, EXP, Level 표시는<br>RefreshHUD에서 한 번에 갱신하도록 통합했습니다.</p>
             </div>
           </div>
           <div class="case-row result">
             <h3>결과</h3>
             <div class="case-copy">
-              <p>스탯 변경과 UI 표시 로직을 분리했고,</p>
-              <p>전투 / 경험치 / 레벨업 이후의<br>HUD 갱신 흐름을 하나로 모을 수 있었습니다.</p>
+              <p>스탯을 변경하는 로직과<br>화면에 표시하는 로직을 분리했고,</p>
+              <p>전투와 경험치 획득, 레벨업 이후의 HUD 갱신을<br>하나의 흐름으로 관리할 수 있게 되었습니다.</p>
             </div>
           </div>
         </article>
