@@ -328,7 +328,7 @@ a {
 }
 
 .license-list div {
-  grid-template-columns: 160px 1fr;
+  grid-template-columns: 112px 1fr;
 }
 
 .info-list dt,
@@ -343,6 +343,10 @@ a {
 .license-list dd,
 .skill-list dd {
   margin: 0;
+}
+
+.license-list dd {
+  white-space: nowrap;
 }
 
 .timeline p {
@@ -362,7 +366,7 @@ a {
 }
 
 .skill-section {
-  margin-top: 150px;
+  margin-top: 64px;
 }
 
 .skill-list div {
@@ -1580,7 +1584,7 @@ a {
   }
 
   .license-list div {
-    grid-template-columns: 108px 1fr;
+    grid-template-columns: 76px 1fr;
   }
 
   .timeline p {
@@ -1588,7 +1592,7 @@ a {
   }
 
   .skill-section {
-    margin-top: 60px;
+    margin-top: 46px;
   }
 
   .skill-list div {
